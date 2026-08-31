@@ -9,7 +9,14 @@
       "author": "Missvain",
       "license": "CC BY 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Handbag_at_Nordstrom_Rack_-_Santa_Rosa_-_December_2022_-_Sarah_Stierch.jpg"
-    }
+    },
+    "price": 14400,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "bag-02",
@@ -21,7 +28,13 @@
       "author": "Thomas Quine",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Stingray_skin_handbag_(48645301521).jpg"
-    }
+    },
+    "price": 15300,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "brown"
   },
   {
     "id": "bag-03",
@@ -33,7 +46,13 @@
       "author": "Trougnouf (Benoit Brummer) , Les cuirs d'Agathe",
       "license": "CC BY 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Leather_handbag_by_Les_cuirs_d%27Agathe_(DSC07738).jpg"
-    }
+    },
+    "price": 16200,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "brown"
   },
   {
     "id": "bag-04",
@@ -45,7 +64,12 @@
       "author": "Thomas Quine",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Kangaroo_handbag_(48566656186).jpg"
-    }
+    },
+    "price": 9900,
+    "sizes": [
+      "S"
+    ],
+    "color": "brown"
   },
   {
     "id": "bag-05",
@@ -57,7 +81,14 @@
       "author": "Thomas Quine",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Crocodile_skin_handbag_(48650078886).jpg"
-    }
+    },
+    "price": 10800,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "brown"
   },
   {
     "id": "bag-06",
@@ -69,7 +100,13 @@
       "author": "Richard Webb",
       "license": "CC BY-SA 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:A_handbag%5E_-_geograph.org.uk_-_5695438.jpg"
-    }
+    },
+    "price": 11700,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "bag-07",
@@ -81,7 +118,13 @@
       "author": "Solomon203",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Flora_Cheng%27s_handbag_and_business_card_box_20220716.jpg"
-    }
+    },
+    "price": 12600,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "gray"
   },
   {
     "id": "bag-08",
@@ -93,7 +136,12 @@
       "author": "FOTO:Fortepan — ID 11924 : Adományozó/Donor: Privát Fotó és Film Archívum-Höfler Tibor gyűjtemény.",
       "license": "CC BY-SA 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Portrait,_woman,_handbag_Fortepan_11924.jpg"
-    }
+    },
+    "price": 6300,
+    "sizes": [
+      "S"
+    ],
+    "color": "gray"
   },
   {
     "id": "shoes-01",
@@ -105,7 +153,13 @@
       "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Superga_Leahorseu_Sneaker_2750_Poni_blau_(1).jpg"
-    }
+    },
+    "price": 6400,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "gray"
   },
   {
     "id": "shoes-02",
@@ -117,7 +171,12 @@
       "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Superga_Macramew_Sneaker_2750_Spitze_rosa_(1).jpg"
-    }
+    },
+    "price": 15400,
+    "sizes": [
+      "S"
+    ],
+    "color": "white"
   },
   {
     "id": "shoes-03",
@@ -129,7 +188,14 @@
       "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Superga_2750_Microfiber_Sneaker_Lederoptik_wei%C3%9F_(3).jpg"
-    }
+    },
+    "price": 12400,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "beige"
   },
   {
     "id": "shoes-04",
@@ -141,7 +207,13 @@
       "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Superga_2750_Microfiber_Sneaker_Lederoptik_schwarz_(1).jpg"
-    }
+    },
+    "price": 5300,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "beige"
   },
   {
     "id": "shoes-05",
@@ -153,7 +225,13 @@
       "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_wei%C3%9F_(1).jpg"
-    }
+    },
+    "price": 18400,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "white"
   },
   {
     "id": "shoes-06",
@@ -165,7 +243,12 @@
       "author": "SPERA.de Designerschuhe, Taschen und Accessoires from Deutschland",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Michael_Kors_Kristy_Lace_Up_Sneaker_43S4KRFS2E_Kalbsleder_braun_(1)_(16286299927).jpg"
-    }
+    },
+    "price": 11300,
+    "sizes": [
+      "S"
+    ],
+    "color": "beige"
   },
   {
     "id": "shoes-07",
@@ -177,7 +260,14 @@
       "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_blau_(3).jpg"
-    }
+    },
+    "price": 8300,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "beige"
   },
   {
     "id": "shoes-08",
@@ -189,7 +279,13 @@
       "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_blau_(2).jpg"
-    }
+    },
+    "price": 17300,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "beige"
   },
   {
     "id": "chair-01",
@@ -201,7 +297,13 @@
       "author": "Dietmar Rabich",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Santorin_(GR),_Fira_--_2017_--_2598.jpg"
-    }
+    },
+    "price": 48600,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "chair-02",
@@ -213,7 +315,14 @@
       "author": "Dietmar Rabich",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:R%C3%BCgen,_Beach_at_Sellin_--_2009_--_1173.jpg"
-    }
+    },
+    "price": 10900,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "chair-03",
@@ -225,7 +334,12 @@
       "author": "Solomon203",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Aorus_gaming_chair_on_the_stage_20230205.jpg"
-    }
+    },
+    "price": 25300,
+    "sizes": [
+      "S"
+    ],
+    "color": "gray"
   },
   {
     "id": "chair-04",
@@ -237,7 +351,13 @@
       "author": "Cullen328",
       "license": "CC BY-SA 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Eames_stacking_chair_for_children.jpg"
-    }
+    },
+    "price": 39700,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "gray"
   },
   {
     "id": "chair-05",
@@ -249,7 +369,13 @@
       "author": "Hoilnawoms",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_Chair_white_n_price_label_Dec-2015_DSC.JPG"
-    }
+    },
+    "price": 54100,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "brown"
   },
   {
     "id": "chair-06",
@@ -261,7 +387,14 @@
       "author": "19h00s",
       "license": "Public domain",
       "source": "https://commons.wikimedia.org/wiki/File:Scott_Burton_Rock_Chair,_Baltimore_1.jpg"
-    }
+    },
+    "price": 16400,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "chair-07",
@@ -273,7 +406,12 @@
       "author": "19h00s",
       "license": "Public domain",
       "source": "https://commons.wikimedia.org/wiki/File:Scott_Burton_Rock_Chair,_Baltimore_2.jpg"
-    }
+    },
+    "price": 30800,
+    "sizes": [
+      "S"
+    ],
+    "color": "gray"
   },
   {
     "id": "chair-08",
@@ -285,7 +423,13 @@
       "author": "Hoilnawoms",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_chair_Red_Dec-2015_DSC.JPG"
-    }
+    },
+    "price": 45200,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "brown"
   },
   {
     "id": "mug-01",
@@ -297,7 +441,12 @@
       "author": "Hubertl",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H4072.jpg"
-    }
+    },
+    "price": 3400,
+    "sizes": [
+      "S"
+    ],
+    "color": "gray"
   },
   {
     "id": "mug-02",
@@ -309,7 +458,13 @@
       "author": "Hubertl",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H4075.jpg"
-    }
+    },
+    "price": 3700,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "gray"
   },
   {
     "id": "mug-03",
@@ -321,7 +476,13 @@
       "author": "Hubertl",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H3923.jpg"
-    }
+    },
+    "price": 1400,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "mug-04",
@@ -333,7 +494,14 @@
       "author": "David Jackson",
       "license": "CC BY-SA 2.0 uk",
       "source": "https://commons.wikimedia.org/wiki/File:BLW_Mug_(1).jpg"
-    }
+    },
+    "price": 3100,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "mug-05",
@@ -345,7 +513,12 @@
       "author": "Unknown author Unknown author",
       "license": "Attribution",
       "source": "https://commons.wikimedia.org/wiki/File:White_Ceramic_Mug_With_Color_Transfer_Image_of_the_Palace_of_Machinery.jpg"
-    }
+    },
+    "price": 800,
+    "sizes": [
+      "S"
+    ],
+    "color": "brown"
   },
   {
     "id": "mug-06",
@@ -357,7 +530,13 @@
       "author": "Unknown author Unknown author",
       "license": "Attribution",
       "source": "https://commons.wikimedia.org/wiki/File:White_Ceramic_Mug_With_Color_Transfer_Image_of_the_Palace_of_Electricity.jpg"
-    }
+    },
+    "price": 1100,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "brown"
   },
   {
     "id": "mug-07",
@@ -369,7 +548,13 @@
       "author": "Trougnouf",
       "license": "CC BY 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Dirty_mug_(IKEA_VARDAGEN_30cl_8cm_after_a_mocha_DSCF2649).jpg"
-    }
+    },
+    "price": 2100,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "brown"
   },
   {
     "id": "mug-08",
@@ -381,7 +566,14 @@
       "author": "Trougnouf",
       "license": "CC BY 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Dirty_mug_(IKEA_VARDAGEN_30cl_8cm_after_a_mocha_DSCF2650).jpg"
-    }
+    },
+    "price": 1000,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "brown"
   },
   {
     "id": "watch-01",
@@ -393,7 +585,12 @@
       "author": "Anton Ehrola",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Wristwatch_Prologue.jpg"
-    }
+    },
+    "price": 8700,
+    "sizes": [
+      "S"
+    ],
+    "color": "white"
   },
   {
     "id": "watch-02",
@@ -405,7 +602,13 @@
       "author": "Longines-Wittnauer Watch Co",
       "license": "CC0",
       "source": "https://commons.wikimedia.org/wiki/File:Wristwatch,_Hour_Angle,_Lindbergh,_King_Collection_-_DPLA_-_48cd2a784bc2d3d4768d0a357ac04d32.jpg"
-    }
+    },
+    "price": 17300,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "black"
   },
   {
     "id": "watch-03",
@@ -417,7 +620,13 @@
       "author": "Anton Ehrola",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Wristwatch_Prologue-2.jpg"
-    }
+    },
+    "price": 64500,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "watch-04",
@@ -429,7 +638,14 @@
       "author": "Joe Haupt from USA",
       "license": "CC BY 2.0",
       "source": "https://commons.wikimedia.org/wiki/File:Vintage_Campbell_Soup_Wristwatch_(Boy)_(8023312622).jpg"
-    }
+    },
+    "price": 75200,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "beige"
   },
   {
     "id": "watch-05",
@@ -441,7 +657,12 @@
       "author": "Pittigrilli",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_from_Tommy_Hilfiger_in_a_German_shop,_2023.jpg"
-    }
+    },
+    "price": 47300,
+    "sizes": [
+      "S"
+    ],
+    "color": "gray"
   },
   {
     "id": "watch-06",
@@ -453,7 +674,13 @@
       "author": "derivative work above: Pittigrilli File:The Rolex Submariner Professional.JPG : Dr.K. File:Alpha watches - analog automatic watch, edited without background.jpg : User:Pittigrilli File:Invicta Mens Automatic Pro Diver Watch 8926 (edited, without background).jpg : User: Stefan Bellini File:Steeldive SD8205-7.jpg : Francis Flinch",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Original_Rolex_Submariner_diving_wristwatch_(l.)_and_three_watches_copying_its_design_(Alpha,_Invicta_and_Steeldive).jpg"
-    }
+    },
+    "price": 55900,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "gray"
   },
   {
     "id": "watch-07",
@@ -465,7 +692,13 @@
       "author": "Donald Trung Quoc Don (Chữ Hán: 徵國單) - Wikimedia Commons - © CC BY-SA 4.0 International . ( Want to use this image? ) Original publication 📤: -- Donald Trung 『徵國單』 ( No Fake News 💬 ) ( WikiProject Numismatics 💴) ( Articles 📚 ) 05:47, 2 August 2023 (UTC)",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_at_the_Lucardi,_Charlois,_Rotterdam_(2023)_01.jpg"
-    }
+    },
+    "price": 28000,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "watch-08",
@@ -477,7 +710,14 @@
       "author": "Donald Trung Quoc Don (Chữ Hán: 徵國單) - Wikimedia Commons - © CC BY-SA 4.0 International . ( Want to use this image? ) Original publication 📤: -- Donald Trung 『徵國單』 ( No Fake News 💬 ) ( WikiProject Numismatics 💴) ( Articles 📚 ) 05:47, 2 August 2023 (UTC)",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_at_the_Lucardi,_Charlois,_Rotterdam_(2023)_04.jpg"
-    }
+    },
+    "price": 38700,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "lamp-01",
@@ -489,7 +729,13 @@
       "author": "Nemo bis",
       "license": "CC BY-SA 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:IKEA_A0401_desk_lamp.JPG"
-    }
+    },
+    "price": 17600,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "brown"
   },
   {
     "id": "lamp-02",
@@ -501,7 +747,12 @@
       "author": "Tbatb",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:A_3M_Desk_Lamp.jpg"
-    }
+    },
+    "price": 14000,
+    "sizes": [
+      "S"
+    ],
+    "color": "gray"
   },
   {
     "id": "lamp-03",
@@ -513,7 +764,14 @@
       "author": "Solomon203",
       "license": "CC BY-SA 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Sharp_LS-M118_on_the_desk_20110506.jpg"
-    }
+    },
+    "price": 22900,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "beige"
   },
   {
     "id": "lamp-04",
@@ -525,7 +783,13 @@
       "author": "Tbatb",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Detail_of_a_3M_Desk_Lamp.jpg"
-    }
+    },
+    "price": 19300,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "lamp-05",
@@ -537,7 +801,13 @@
       "author": "Christos Vittoratos",
       "license": "CC BY-SA 3.0",
       "source": "https://commons.wikimedia.org/wiki/File:Christian-dell_molitor-office-work-lamp-light.jpg"
-    }
+    },
+    "price": 5100,
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "color": "beige"
   },
   {
     "id": "lamp-06",
@@ -549,7 +819,12 @@
       "author": "LannyWay",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:Dekala_Arches%E2%84%A2_Smart_Lamp.jpg"
-    }
+    },
+    "price": 24600,
+    "sizes": [
+      "S"
+    ],
+    "color": "brown"
   },
   {
     "id": "lamp-07",
@@ -561,7 +836,14 @@
       "author": "Hoilnawoms",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_lighting_desk_stand_5_lamps_Dec-2015_DSC.JPG"
-    }
+    },
+    "price": 10400,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "color": "gray"
   },
   {
     "id": "lamp-08",
@@ -573,6 +855,12 @@
       "author": "Solomon203",
       "license": "CC BY-SA 4.0",
       "source": "https://commons.wikimedia.org/wiki/File:BenQ_WiT_MindDuo_20201101.jpg"
-    }
+    },
+    "price": 10600,
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "color": "beige"
   }
 ]

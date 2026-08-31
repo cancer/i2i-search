@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "generate:images": "node --experimental-strip-types scripts/generate-images.ts",
+    "enrich:products": "node --experimental-strip-types scripts/enrich-products.ts",
     "test": "node --experimental-strip-types --test test/*.test.ts",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.ui.json --noEmit",
     "dev:ui": "vite",
