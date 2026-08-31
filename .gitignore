@@ -1,0 +1,5 @@
+node_modules/
+.dev.vars
+.wrangler/
+data/vectors.ndjson
+dist/
