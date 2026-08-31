@@ -16,6 +16,14 @@ Commons から実写を取得して画像と商品一覧を再生成します（
 npm run generate:images
 ```
 
+## 商品データのメタデータ
+
+`public/products.json` の各商品には、価格（`price`）、サイズ展開（`sizes`）、色（`color`）が含まれます。画像から色を再抽出し、IDから決定的に価格・サイズを再生成する場合は次を実行します。
+
+```sh
+npm run enrich:products
+```
+
 ## 画像の出所と帰属
 
 画像は Wikimedia Commons から取得しています。各画像のライセンス・作者・出典は `public/products.json` の `credit` フィールドを参照してください。

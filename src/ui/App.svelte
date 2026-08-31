@@ -8,6 +8,9 @@
     name: string;
     category: string;
     image: string;
+    price: number;
+    sizes: string[];
+    color: string;
     credit: {
       title: string;
       author: string;
@@ -16,26 +19,102 @@
     };
   };
 
-  type SearchResult = Omit<Product, "credit"> & {
+  type SearchResult = {
+    id: string;
+    name: string;
+    category: string;
+    image: string;
     score?: number;
   };
+
+  type Size = "S" | "M" | "L";
+  type Color = "black" | "white" | "gray" | "brown" | "red" | "blue" | "green" | "beige";
+
+  const availableSizes: readonly Size[] = ["S", "M", "L"];
+  const availableColors: readonly Color[] = [
+    "black",
+    "white",
+    "gray",
+    "brown",
+    "red",
+    "blue",
+    "green",
+    "beige",
+  ];
+  const colorLabels: Record<Color, string> = {
+    black: "黒",
+    white: "白",
+    gray: "灰",
+    brown: "茶",
+    red: "赤",
+    blue: "青",
+    green: "緑",
+    beige: "ベージュ",
+  };
+  const colorSwatches: Record<Color, string> = {
+    black: "#24211f",
+    white: "#fffdf8",
+    gray: "#9d9b98",
+    brown: "#8a5b3d",
+    red: "#b84a3c",
+    blue: "#4f6fae",
+    green: "#5f8d5a",
+    beige: "#d6c0a0",
+  };
+
+  type SearchMode = "keyword" | "image";
 
   let products = $state<Product[]>([]);
   let productsById = $derived(new Map(products.map((product) => [product.id, product])));
   let keywordText = $state("");
   let keywordQuery = $derived(keywordText.trim().toLowerCase());
-  let keywordResults = $derived<SearchResult[]>(
-    keywordQuery === ""
-      ? []
-      : products.filter((product) =>
-          product.name.toLowerCase().includes(keywordQuery)
-          || product.category.toLowerCase().includes(keywordQuery)
-          || product.credit.title.toLowerCase().includes(keywordQuery),
-        ),
-  );
   let results = $state<SearchResult[]>([]);
+  let searchMode = $state<SearchMode>("keyword");
+  let minimumPriceText = $state("");
+  let maximumPriceText = $state("");
+  let selectedSizes = $state<Size[]>([]);
+  let selectedColors = $state<Color[]>([]);
+  let minimumPrice = $derived(parsePrice(minimumPriceText));
+  let maximumPrice = $derived(parsePrice(maximumPriceText));
+  let hasMetadataFilters = $derived(
+    minimumPriceText.trim() !== ""
+      || maximumPriceText.trim() !== ""
+      || selectedSizes.length > 0
+      || selectedColors.length > 0,
+  );
+  let matchesFilters = $derived.by(() => {
+    const activeSizes = [...selectedSizes];
+    const activeColors = [...selectedColors];
+    const lowerPrice = minimumPrice;
+    const upperPrice = maximumPrice;
+
+    return (product: Product): boolean =>
+      (lowerPrice === undefined || product.price >= lowerPrice)
+      && (upperPrice === undefined || product.price <= upperPrice)
+      && (activeSizes.length === 0 || activeSizes.some((size) => product.sizes.includes(size)))
+      && (activeColors.length === 0 || activeColors.includes(product.color as Color));
+  });
+  let keywordResults = $derived<SearchResult[]>(
+    products.filter((product) =>
+      (keywordQuery === ""
+        || product.name.toLowerCase().includes(keywordQuery)
+        || product.category.toLowerCase().includes(keywordQuery)
+        || product.credit.title.toLowerCase().includes(keywordQuery))
+      && matchesFilters(product),
+    ),
+  );
+  let imageResults = $derived<SearchResult[]>(
+    results.filter((result) => {
+      const product = productsById.get(result.id);
+      return product !== undefined && matchesFilters(product);
+    }),
+  );
   let displayedResults = $derived<SearchResult[]>(
-    keywordQuery === "" ? results : keywordResults,
+    searchMode === "image"
+      ? imageResults
+      : keywordQuery !== "" || hasMetadataFilters
+        ? keywordResults
+        : [],
   );
   let loadingProducts = $state(true);
   let loadingSearch = $state(false);
@@ -45,6 +124,30 @@
 
   function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === "object" && value !== null;
+  }
+
+  function isSize(value: unknown): value is Size {
+    return typeof value === "string" && availableSizes.includes(value as Size);
+  }
+
+  function isColor(value: unknown): value is Color {
+    return typeof value === "string" && availableColors.includes(value as Color);
+  }
+
+  function parsePrice(value: string): number | undefined {
+    if (value.trim() === "") {
+      return undefined;
+    }
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : undefined;
+  }
+
+  function getColorLabel(color: string): string {
+    return isColor(color) ? colorLabels[color] : color;
+  }
+
+  function getColorSwatch(color: string): string {
+    return isColor(color) ? colorSwatches[color] : "#8a8178";
   }
 
   function isCredit(value: unknown): value is Product["credit"] {
@@ -61,6 +164,12 @@
       && typeof value.name === "string"
       && typeof value.category === "string"
       && typeof value.image === "string"
+      && typeof value.price === "number"
+      && Number.isFinite(value.price)
+      && Array.isArray(value.sizes)
+      && value.sizes.length > 0
+      && value.sizes.every(isSize)
+      && isColor(value.color)
       && isCredit(value.credit);
   }
 
@@ -113,10 +222,38 @@
   function handleKeywordInput(event: Event): void {
     const input = event.currentTarget as HTMLInputElement;
     keywordText = input.value;
+    searchMode = "keyword";
     ++searchSeq;
     results = [];
     loadingSearch = false;
     selectedFileName = "";
+  }
+
+  function handleMinimumPriceInput(event: Event): void {
+    minimumPriceText = (event.currentTarget as HTMLInputElement).value;
+  }
+
+  function handleMaximumPriceInput(event: Event): void {
+    maximumPriceText = (event.currentTarget as HTMLInputElement).value;
+  }
+
+  function toggleSize(size: Size): void {
+    selectedSizes = selectedSizes.includes(size)
+      ? selectedSizes.filter((selectedSize) => selectedSize !== size)
+      : [...selectedSizes, size];
+  }
+
+  function toggleColor(color: Color): void {
+    selectedColors = selectedColors.includes(color)
+      ? selectedColors.filter((selectedColor) => selectedColor !== color)
+      : [...selectedColors, color];
+  }
+
+  function clearFilters(): void {
+    minimumPriceText = "";
+    maximumPriceText = "";
+    selectedSizes = [];
+    selectedColors = [];
   }
 
   async function search(file: File): Promise<void> {
@@ -132,6 +269,7 @@
     loadingSearch = true;
     errorMessage = "";
     keywordText = "";
+    searchMode = "image";
     results = [];
     selectedFileName = file.name;
 
@@ -196,6 +334,7 @@
   async function searchProduct(product: Product): Promise<void> {
     const currentSearchSeq = ++searchSeq;
     keywordText = "";
+    searchMode = "image";
     results = [];
     loadingSearch = false;
 
@@ -269,6 +408,85 @@
       oninput={handleKeywordInput}
     />
 
+    <div class="filter-controls" aria-label="商品情報で絞り込む">
+      <div class="filter-row">
+        <fieldset class="filter-group price-filter">
+          <legend>価格帯</legend>
+          <div class="price-inputs">
+            <input
+              class="price-input"
+              type="number"
+              min="0"
+              inputmode="numeric"
+              placeholder="下限"
+              aria-label="価格の下限"
+              value={minimumPriceText}
+              oninput={handleMinimumPriceInput}
+            />
+            <span aria-hidden="true">〜</span>
+            <input
+              class="price-input"
+              type="number"
+              min="0"
+              inputmode="numeric"
+              placeholder="上限"
+              aria-label="価格の上限"
+              value={maximumPriceText}
+              oninput={handleMaximumPriceInput}
+            />
+          </div>
+        </fieldset>
+
+        <fieldset class="filter-group size-filter">
+          <legend>サイズ展開</legend>
+          <div class="size-options">
+            {#each availableSizes as size}
+              <label class="size-option">
+                <input
+                  type="checkbox"
+                  checked={selectedSizes.includes(size)}
+                  onchange={() => toggleSize(size)}
+                />
+                <span>{size}</span>
+              </label>
+            {/each}
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="filter-row color-filter-row">
+        <fieldset class="filter-group color-filter">
+          <legend>色</legend>
+          <div class="color-options">
+            {#each availableColors as color}
+              <button
+                class:active={selectedColors.includes(color)}
+                class="color-chip"
+                type="button"
+                aria-pressed={selectedColors.includes(color)}
+                onclick={() => toggleColor(color)}
+              >
+                <span
+                  class="color-swatch"
+                  style={`--swatch-color: ${colorSwatches[color]}`}
+                  aria-hidden="true"
+                ></span>
+                <span>{colorLabels[color]}</span>
+              </button>
+            {/each}
+          </div>
+        </fieldset>
+        <button
+          class="clear-filters"
+          type="button"
+          disabled={!hasMetadataFilters}
+          onclick={clearFilters}
+        >
+          条件をクリア
+        </button>
+      </div>
+    </div>
+
     {#if loadingSearch}
       <p class="status" aria-live="polite">検索中…</p>
     {/if}
@@ -294,19 +512,31 @@
           {@const product = productsById.get(result.id)}
           <article class="result-card">
             <img
-              src={result.image}
-              alt={result.name}
+              src={product?.image ?? result.image}
+              alt={product?.name ?? result.name}
               title={product ? getImageTitle(product) : result.name}
             />
             <div class="card-details">
               <div>
-                <h3>{result.name}</h3>
-                <p>{result.category}</p>
+                <h3>{product?.name ?? result.name}</h3>
+                <p>{product?.category ?? result.category}</p>
               </div>
               {#if result.score !== undefined}
                 <span class="score">{result.score.toFixed(3)}</span>
               {/if}
             </div>
+            {#if product}
+              <div class="product-metadata">
+                <span class="product-price">¥{product.price.toLocaleString("ja-JP")}</span>
+                <span>{product.sizes.join(" / ")}</span>
+                <span
+                  class="metadata-color"
+                  style={`--swatch-color: ${getColorSwatch(product.color)}`}
+                  title={getColorLabel(product.color)}
+                  aria-label={`色: ${getColorLabel(product.color)}`}
+                ></span>
+              </div>
+            {/if}
           </article>
         {/each}
       </div>
@@ -340,6 +570,16 @@
             />
             <span class="product-name">{product.name}</span>
             <span class="product-category">{product.category}</span>
+            <span class="product-metadata">
+              <span class="product-price">¥{product.price.toLocaleString("ja-JP")}</span>
+              <span>{product.sizes.join(" / ")}</span>
+              <span
+                class="metadata-color"
+                style={`--swatch-color: ${getColorSwatch(product.color)}`}
+                title={getColorLabel(product.color)}
+                aria-label={`色: ${getColorLabel(product.color)}`}
+              ></span>
+            </span>
           </button>
         {/each}
       </div>
@@ -543,6 +783,33 @@
     font-size: 0.75rem;
   }
 
+  .product-metadata {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding: 0 14px 14px;
+    color: #716960;
+    font-size: 0.72rem;
+  }
+
+  .product-price {
+    color: #8b432d;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .metadata-color,
+  .color-swatch {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    flex: 0 0 auto;
+    border: 1px solid rgba(40, 35, 31, 0.2);
+    border-radius: 50%;
+    background: var(--swatch-color);
+  }
+
   .score {
     flex: 0 0 auto;
     padding: 4px 6px;
@@ -572,6 +839,124 @@
     border-color: #b45137;
     outline: 2px solid #e9c5b0;
     outline-offset: 2px;
+  }
+
+  .filter-controls {
+    display: grid;
+    gap: 14px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid #e5ded4;
+  }
+
+  .filter-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px 22px;
+  }
+
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .filter-group legend {
+    padding: 0;
+    color: #716960;
+    font-size: 0.74rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .price-inputs,
+  .size-options,
+  .color-options {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .price-input {
+    width: 92px;
+    padding: 8px 9px;
+    border: 1px solid #ded7cd;
+    border-radius: 9px;
+    background: #fffaf2;
+    color: inherit;
+    font-size: 0.78rem;
+  }
+
+  .price-input:focus {
+    border-color: #b45137;
+    outline: 2px solid #e9c5b0;
+    outline-offset: 1px;
+  }
+
+  .size-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #50483f;
+    font-size: 0.8rem;
+  }
+
+  .size-option input {
+    accent-color: #b45137;
+  }
+
+  .color-filter {
+    flex: 1 1 auto;
+  }
+
+  .color-options {
+    flex-wrap: wrap;
+  }
+
+  .color-chip,
+  .clear-filters {
+    border: 1px solid #ded7cd;
+    border-radius: 999px;
+    background: #fffaf2;
+    color: #50483f;
+    cursor: pointer;
+    font-size: 0.74rem;
+  }
+
+  .color-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 9px;
+  }
+
+  .color-chip.active {
+    border-color: #b45137;
+    background: #f0e1d5;
+    color: #713d2c;
+  }
+
+  .color-chip:hover,
+  .color-chip:focus-visible,
+  .clear-filters:hover,
+  .clear-filters:focus-visible {
+    border-color: #b45137;
+    outline: none;
+  }
+
+  .clear-filters {
+    margin-left: auto;
+    padding: 7px 12px;
+  }
+
+  .clear-filters:disabled {
+    cursor: default;
+    opacity: 0.45;
   }
 
   .catalog-grid {
@@ -611,6 +996,12 @@
   .product-category {
     display: block;
     padding: 0 10px;
+  }
+
+  .product-card .product-metadata {
+    gap: 4px 8px;
+    padding: 0 10px 12px;
+    font-size: 0.68rem;
   }
 
   .product-name {
@@ -659,6 +1050,16 @@
       align-items: flex-start;
       flex-direction: column;
       gap: 8px;
+    }
+
+    .filter-group {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .clear-filters {
+      margin-left: 0;
     }
 
     .result-grid {
