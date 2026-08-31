@@ -16,7 +16,7 @@
       "M",
       "L"
     ],
-    "color": "gray"
+    "color": "black"
   },
   {
     "id": "bag-02",
@@ -34,7 +34,7 @@
       "M",
       "L"
     ],
-    "color": "brown"
+    "color": "black"
   },
   {
     "id": "bag-03",
@@ -52,7 +52,7 @@
       "S",
       "M"
     ],
-    "color": "brown"
+    "color": "white"
   },
   {
     "id": "bag-04",
@@ -69,7 +69,7 @@
     "sizes": [
       "S"
     ],
-    "color": "brown"
+    "color": "black"
   },
   {
     "id": "bag-05",
@@ -88,7 +88,7 @@
       "M",
       "L"
     ],
-    "color": "brown"
+    "color": "black"
   },
   {
     "id": "bag-06",
@@ -106,7 +106,7 @@
       "M",
       "L"
     ],
-    "color": "gray"
+    "color": "white"
   },
   {
     "id": "bag-07",
@@ -124,7 +124,7 @@
       "S",
       "M"
     ],
-    "color": "gray"
+    "color": "white"
   },
   {
     "id": "bag-08",
@@ -141,7 +141,7 @@
     "sizes": [
       "S"
     ],
-    "color": "gray"
+    "color": "white"
   },
   {
     "id": "shoes-01",
@@ -159,7 +159,7 @@
       "S",
       "M"
     ],
-    "color": "gray"
+    "color": "white"
   },
   {
     "id": "shoes-02",
@@ -195,7 +195,7 @@
       "M",
       "L"
     ],
-    "color": "beige"
+    "color": "white"
   },
   {
     "id": "shoes-04",
@@ -213,7 +213,7 @@
       "M",
       "L"
     ],
-    "color": "beige"
+    "color": "white"
   },
   {
     "id": "shoes-05",
@@ -248,7 +248,7 @@
     "sizes": [
       "S"
     ],
-    "color": "beige"
+    "color": "white"
   },
   {
     "id": "shoes-07",
@@ -267,7 +267,7 @@
       "M",
       "L"
     ],
-    "color": "beige"
+    "color": "white"
   },
   {
     "id": "shoes-08",
@@ -285,7 +285,7 @@
       "M",
       "L"
     ],
-    "color": "beige"
+    "color": "white"
   },
   {
     "id": "chair-01",
@@ -303,7 +303,7 @@
       "M",
       "L"
     ],
-    "color": "gray"
+    "color": "green"
   },
   {
     "id": "chair-02",
@@ -357,7 +357,7 @@
       "S",
       "M"
     ],
-    "color": "gray"
+    "color": "beige"
   },
   {
     "id": "chair-05",
@@ -375,7 +375,7 @@
       "M",
       "L"
     ],
-    "color": "brown"
+    "color": "gray"
   },
   {
     "id": "chair-06",
@@ -394,7 +394,7 @@
       "M",
       "L"
     ],
-    "color": "gray"
+    "color": "black"
   },
   {
     "id": "chair-07",
@@ -411,7 +411,7 @@
     "sizes": [
       "S"
     ],
-    "color": "gray"
+    "color": "black"
   },
   {
     "id": "chair-08",
@@ -446,7 +446,7 @@
     "sizes": [
       "S"
     ],
-    "color": "gray"
+    "color": "beige"
   },
   {
     "id": "mug-02",
@@ -501,7 +501,7 @@
       "M",
       "L"
     ],
-    "color": "gray"
+    "color": "black"
   },
   {
     "id": "mug-05",
@@ -590,7 +590,7 @@
     "sizes": [
       "S"
     ],
-    "color": "white"
+    "color": "beige"
   },
   {
     "id": "watch-02",
@@ -626,7 +626,7 @@
       "M",
       "L"
     ],
-    "color": "gray"
+    "color": "beige"
   },
   {
     "id": "watch-04",
@@ -645,7 +645,7 @@
       "M",
       "L"
     ],
-    "color": "beige"
+    "color": "white"
   },
   {
     "id": "watch-05",
@@ -662,7 +662,7 @@
     "sizes": [
       "S"
     ],
-    "color": "gray"
+    "color": "black"
   },
   {
     "id": "watch-06",
@@ -680,7 +680,7 @@
       "S",
       "M"
     ],
-    "color": "gray"
+    "color": "white"
   },
   {
     "id": "watch-07",
@@ -735,7 +735,7 @@
       "S",
       "M"
     ],
-    "color": "brown"
+    "color": "black"
   },
   {
     "id": "lamp-02",
@@ -771,7 +771,7 @@
       "M",
       "L"
     ],
-    "color": "beige"
+    "color": "white"
   },
   {
     "id": "lamp-04",
@@ -789,7 +789,7 @@
       "M",
       "L"
     ],
-    "color": "gray"
+    "color": "white"
   },
   {
     "id": "lamp-05",
@@ -807,7 +807,7 @@
       "S",
       "M"
     ],
-    "color": "beige"
+    "color": "white"
   },
   {
     "id": "lamp-06",
@@ -843,7 +843,7 @@
       "M",
       "L"
     ],
-    "color": "gray"
+    "color": "white"
   },
   {
     "id": "lamp-08",
@@ -861,6 +861,6 @@
       "M",
       "L"
     ],
-    "color": "beige"
+    "color": "white"
   }
 ]

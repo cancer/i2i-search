@@ -34,6 +34,10 @@ export const COLORS: readonly Color[] = [
   "beige",
 ];
 
+export const ACHROMATIC_COLORS: readonly Color[] = ["black", "white", "gray"];
+export const CHROMATIC_COLORS: readonly Color[] = ["brown", "red", "blue", "green", "beige"];
+export const COLOR_CHROMA_THRESHOLD = 30;
+
 export const COLOR_REPRESENTATIVES: Record<Color, Rgb> = {
   black: { r: 20, g: 20, b: 20 },
   white: { r: 240, g: 240, b: 240 },
@@ -84,10 +88,12 @@ export function deriveSizes(id: string): Size[] {
 }
 
 export function classifyColor(rgb: Rgb): Color {
-  let closestColor = COLORS[0];
+  const chroma = Math.max(rgb.r, rgb.g, rgb.b) - Math.min(rgb.r, rgb.g, rgb.b);
+  const candidateColors = chroma < COLOR_CHROMA_THRESHOLD ? ACHROMATIC_COLORS : CHROMATIC_COLORS;
+  let closestColor = candidateColors[0];
   let closestDistance = Number.POSITIVE_INFINITY;
 
-  for (const color of COLORS) {
+  for (const color of candidateColors) {
     const representative = COLOR_REPRESENTATIVES[color];
     const redDistance = rgb.r - representative.r;
     const greenDistance = rgb.g - representative.g;
@@ -115,7 +121,7 @@ function isProductRecord(value: unknown): value is ProductRecord {
   return isRecord(value) && typeof value.id === "string" && isCategory(value.category);
 }
 
-async function averageCenterColor(imagePath: string): Promise<Rgb> {
+async function dominantCenterColor(imagePath: string): Promise<Rgb> {
   const metadata = await sharp(imagePath).metadata();
   if (!metadata.width || !metadata.height) {
     throw new Error(`画像サイズを取得できません: ${imagePath}`);
@@ -129,9 +135,7 @@ async function averageCenterColor(imagePath: string): Promise<Rgb> {
     .extract({ left, top, width, height })
     .removeAlpha()
     .stats();
-  const [red, green = red, blue = green] = stats.channels.map((channel) => channel.mean);
-
-  return { r: red, g: green, b: blue };
+  return stats.dominant;
 }
 
 export async function enrichProducts(): Promise<void> {
@@ -145,12 +149,12 @@ export async function enrichProducts(): Promise<void> {
   const enrichedProducts: ProductRecord[] = [];
   for (const product of rawProducts) {
     const imagePath = path.join(projectRoot, "public", "images", `product-${product.id}.png`);
-    const averageColor = await averageCenterColor(imagePath);
+    const dominantColor = await dominantCenterColor(imagePath);
     enrichedProducts.push({
       ...product,
       price: derivePrice(product.id, product.category),
       sizes: deriveSizes(product.id),
-      color: classifyColor(averageColor),
+      color: classifyColor(dominantColor),
     });
   }
 

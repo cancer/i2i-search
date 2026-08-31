@@ -2,6 +2,9 @@ import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
 import {
+  ACHROMATIC_COLORS,
+  CHROMATIC_COLORS,
+  COLOR_CHROMA_THRESHOLD,
   classifyColor,
   derivePrice,
   deriveSizes,
@@ -42,5 +45,18 @@ test("price and size derivation is deterministic and stays within category range
 test("color classification maps representative RGB values to the nearest named color", () => {
   assert.equal(classifyColor({ r: 20, g: 20, b: 20 }), "black");
   assert.equal(classifyColor({ r: 238, g: 242, b: 239 }), "white");
+  assert.equal(classifyColor({ r: 178, g: 42, b: 38 }), "red");
+});
+
+test("color classification chooses nearest colors from the dominant color chroma group", () => {
+  assert.equal(COLOR_CHROMA_THRESHOLD, 30);
+  assert.deepEqual(ACHROMATIC_COLORS, ["black", "white", "gray"]);
+  assert.deepEqual(CHROMATIC_COLORS, ["brown", "red", "blue", "green", "beige"]);
+
+  const lowChromaColor = { r: 180, g: 155, b: 155 };
+  assert.equal(classifyColor(lowChromaColor), "gray");
+  assert.equal(classifyColor(lowChromaColor), classifyColor(lowChromaColor));
+
+  assert.equal(classifyColor({ r: 180, g: 150, b: 150 }), "beige");
   assert.equal(classifyColor({ r: 178, g: 42, b: 38 }), "red");
 });
