@@ -1,6 +1,19 @@
 export const EMBEDDING_MODEL = "gemini-embedding-2";
 export const EMBEDDING_DIMENSIONS = 768;
 export const EMBEDDING_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent`;
+export const DESCRIPTION_MODEL = "gemini-3.7-flash";
+export const DESCRIPTION_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${DESCRIPTION_MODEL}:generateContent`;
+
+type ImageMimeType = "image/png" | "image/jpeg";
+type FetchFunction = typeof fetch;
+type InlineImagePart = {
+  inline_data: {
+    mime_type: ImageMimeType;
+    data: string;
+  };
+};
+type TextPart = { text: string };
+type EmbeddingPart = InlineImagePart | TextPart;
 
 export class GeminiEmbeddingError extends Error {
   readonly status: number;
@@ -87,11 +100,19 @@ function getEmbeddingValues(payload: unknown): unknown {
     : undefined;
 }
 
-export async function embedImage(
-  bytes: Uint8Array,
-  mimeType: "image/png" | "image/jpeg",
+function imagePart(bytes: Uint8Array, mimeType: ImageMimeType): InlineImagePart {
+  return {
+    inline_data: {
+      mime_type: mimeType,
+      data: toBase64(bytes),
+    },
+  };
+}
+
+async function embeddingRequest(
+  parts: EmbeddingPart[],
   apiKey: string,
-  fetchFn: typeof fetch = fetch,
+  fetchFn: FetchFunction,
 ): Promise<number[]> {
   const response = await fetchFn(EMBEDDING_ENDPOINT, {
     method: "POST",
@@ -100,16 +121,7 @@ export async function embedImage(
       "content-type": "application/json",
     },
     body: JSON.stringify({
-      content: {
-        parts: [
-          {
-            inline_data: {
-              mime_type: mimeType,
-              data: toBase64(bytes),
-            },
-          },
-        ],
-      },
+      content: { parts },
       embedContentConfig: {
         outputDimensionality: EMBEDDING_DIMENSIONS,
       },
@@ -151,4 +163,114 @@ export async function embedImage(
   }
 
   return values;
+}
+
+function descriptionText(payload: unknown): string {
+  if (!isRecord(payload) || !Array.isArray(payload.candidates) || payload.candidates.length === 0) {
+    return "";
+  }
+
+  const candidate = payload.candidates[0];
+  if (!isRecord(candidate) || !isRecord(candidate.content) || !Array.isArray(candidate.content.parts)) {
+    return "";
+  }
+
+  return candidate.content.parts
+    .map((part) => isRecord(part) && typeof part.text === "string" ? part.text : "")
+    .join("")
+    .trim();
+}
+
+export async function describeProduct(
+  bytes: Uint8Array,
+  mimeType: ImageMimeType,
+  productName: string,
+  category: string,
+  apiKey: string,
+  fetchFn: FetchFunction = fetch,
+): Promise<string> {
+  const response = await fetchFn(DESCRIPTION_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "x-goog-api-key": apiKey,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      contents: [{
+        parts: [
+          imagePart(bytes, mimeType),
+          {
+            text: `あなたはECサイトのコピーライターです。この商品（商品名: ${productName} / カテゴリ: ${category}）の商品説明文を日本語で書いてください。2〜3文、80〜150字。商品の特徴・素材感・使いどころ・魅力を購入者向けに述べる。写真そのものへの言及（「写真には」「写っている」「画像は」等）は禁止。説明文のみを出力。`,
+          },
+        ],
+      }],
+    }),
+  });
+
+  if (!response.ok) {
+    let body = "";
+    try {
+      body = await readErrorBody(response);
+    } catch {
+      body = "";
+    }
+    throw new GeminiEmbeddingError(response.status, summarizeErrorBody(body, apiKey));
+  }
+
+  let payload: unknown;
+  try {
+    payload = await response.json();
+  } catch {
+    throw new Error("Gemini description response was not valid JSON");
+  }
+
+  const description = descriptionText(payload);
+  if (description === "") {
+    throw new Error("Gemini description response did not contain a product description");
+  }
+
+  return description;
+}
+
+export async function embedImage(
+  bytes: Uint8Array,
+  mimeType: ImageMimeType,
+  apiKey: string,
+  fetchFnOrText?: FetchFunction | string,
+  textOrFetchFn?: string | FetchFunction,
+): Promise<number[]> {
+  const fetchFn = typeof fetchFnOrText === "function"
+    ? fetchFnOrText
+    : typeof textOrFetchFn === "function"
+      ? textOrFetchFn
+      : fetch;
+  const text = typeof fetchFnOrText === "string"
+    ? fetchFnOrText
+    : typeof textOrFetchFn === "string"
+      ? textOrFetchFn
+      : undefined;
+  const parts: EmbeddingPart[] = [imagePart(bytes, mimeType)];
+  if (text !== undefined) {
+    parts.push({ text });
+  }
+
+  return embeddingRequest(parts, apiKey, fetchFn);
+}
+
+export async function embedProduct(
+  bytes: Uint8Array,
+  mimeType: ImageMimeType,
+  text: string,
+  apiKey: string,
+  fetchFn: FetchFunction = fetch,
+): Promise<number[]> {
+  return embedImage(bytes, mimeType, apiKey, fetchFn, text);
+}
+
+export async function embedText(
+  text: string,
+  apiKey: string,
+  fetchFn: FetchFunction = fetch,
+): Promise<number[]> {
+  return embeddingRequest([{ text }], apiKey, fetchFn);
 }

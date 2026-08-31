@@ -10,6 +10,9 @@ interface IngestProduct {
   name: string;
   category: string;
   image: string;
+  price: number;
+  sizes: string[];
+  color: string;
 }
 
 function createEnvironment(
@@ -87,6 +90,28 @@ async function withGeminiEmbeddingResponse<T>(action: () => Promise<T>): Promise
   }
 }
 
+async function withGeminiIngestResponses<T>(action: () => Promise<T>): Promise<T> {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (input) => {
+    const endpoint = String(input);
+    if (endpoint.endsWith(":generateContent")) {
+      return new Response(JSON.stringify({
+        candidates: [{ content: { parts: [{ text: "毎日に寄り添う魅力的な商品です。" }] } }],
+      }), { status: 200 });
+    }
+
+    return new Response(
+      JSON.stringify({ embedding: { values: Array(768).fill(0.25) } }),
+      { status: 200 },
+    );
+  };
+  try {
+    return await action();
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+}
+
 test("GET /api/search returns 405", async () => {
   const response = await callWorker(
     new Request("https://example.test/api/search"),
@@ -132,14 +157,14 @@ test("POST /api/ingest rejects a missing token", async () => {
 
 test("POST /api/ingest embeds and upserts the selected products", async () => {
   const products: IngestProduct[] = [
-    { id: "bag-01", name: "Bag 01", category: "bag", image: "/images/bag-01.png" },
-    { id: "bag-02", name: "Bag 02", category: "bag", image: "/images/bag-02.png" },
-    { id: "bag-03", name: "Bag 03", category: "bag", image: "/images/bag-03.png" },
-    { id: "bag-04", name: "Bag 04", category: "bag", image: "/images/bag-04.png" },
+    { id: "bag-01", name: "Bag 01", category: "bag", image: "/images/bag-01.png", price: 1000, sizes: ["S"], color: "black" },
+    { id: "bag-02", name: "Bag 02", category: "bag", image: "/images/bag-02.png", price: 2000, sizes: ["M", "L"], color: "brown" },
+    { id: "bag-03", name: "Bag 03", category: "bag", image: "/images/bag-03.png", price: 3000, sizes: ["S", "M"], color: "white" },
+    { id: "bag-04", name: "Bag 04", category: "bag", image: "/images/bag-04.png", price: 4000, sizes: ["L"], color: "red" },
   ];
   const { environment, assetPaths, upsertedVectors } = createIngestEnvironment(products);
 
-  const response = await withGeminiEmbeddingResponse(() => callWorker(
+  const response = await withGeminiIngestResponses(() => callWorker(
     new Request("https://example.test/api/ingest?offset=1&limit=2", {
       method: "POST",
       headers: { "x-ingest-token": "ingest-test-token" },
@@ -163,20 +188,36 @@ test("POST /api/ingest embeds and upserts the selected products", async () => {
     {
       id: "bag-02",
       values: Array(768).fill(0.25),
-      metadata: { name: "Bag 02", category: "bag", image: "/images/bag-02.png" },
+      metadata: {
+        name: "Bag 02",
+        category: "bag",
+        image: "/images/bag-02.png",
+        description: "毎日に寄り添う魅力的な商品です。",
+        price: 2000,
+        sizes: ["M", "L"],
+        color: "brown",
+      },
     },
     {
       id: "bag-03",
       values: Array(768).fill(0.25),
-      metadata: { name: "Bag 03", category: "bag", image: "/images/bag-03.png" },
+      metadata: {
+        name: "Bag 03",
+        category: "bag",
+        image: "/images/bag-03.png",
+        description: "毎日に寄り添う魅力的な商品です。",
+        price: 3000,
+        sizes: ["S", "M"],
+        color: "white",
+      },
     },
   ]);
 });
 
 test("POST /api/ingest returns zero processed when offset reaches the total", async () => {
   const products: IngestProduct[] = [
-    { id: "bag-01", name: "Bag 01", category: "bag", image: "/images/bag-01.png" },
-    { id: "bag-02", name: "Bag 02", category: "bag", image: "/images/bag-02.png" },
+    { id: "bag-01", name: "Bag 01", category: "bag", image: "/images/bag-01.png", price: 1000, sizes: ["S"], color: "black" },
+    { id: "bag-02", name: "Bag 02", category: "bag", image: "/images/bag-02.png", price: 2000, sizes: ["M"], color: "white" },
   ];
   const { environment, assetPaths, upsertedVectors } = createIngestEnvironment(products);
 
@@ -192,6 +233,26 @@ test("POST /api/ingest returns zero processed when offset reaches the total", as
   assert.deepEqual(await response.json(), { processed: 0, total: 2, ids: [] });
   assert.deepEqual(assetPaths, ["/products.json"]);
   assert.deepEqual(upsertedVectors, []);
+});
+
+test("POST /api/ingest reports the upstream status when description generation fails", async () => {
+  const products: IngestProduct[] = [
+    { id: "bag-01", name: "Bag 01", category: "bag", image: "/images/bag-01.png", price: 1000, sizes: ["S"], color: "black" },
+  ];
+  const { environment } = createIngestEnvironment(products);
+  const response = await withGeminiResponse(
+    new Response("upstream secret details", { status: 404 }),
+    () => callWorker(
+      new Request("https://example.test/api/ingest", {
+        method: "POST",
+        headers: { "x-ingest-token": "ingest-test-token" },
+      }),
+      environment,
+    ),
+  );
+
+  assert.equal(response.status, 502);
+  assert.deepEqual(await response.json(), { error: "ingest failed (upstream 404)" });
 });
 
 test("POST /api/search rejects a request without an image", async () => {
@@ -291,6 +352,87 @@ test("POST /api/search embeds the image and returns selected Vectorize metadata"
   });
   assert.deepEqual(queriedValues, Array(768).fill(0.25));
   assert.deepEqual(queriedOptions, { topK: 12, returnMetadata: "all" });
+});
+
+test("POST /api/search accepts JSON text and returns semantic metadata", async () => {
+  let queriedValues: number[] | undefined;
+  const env = createEnvironment(async (values) => {
+    queriedValues = values;
+    return {
+      matches: [{
+        id: "bag-01",
+        score: 0.876543,
+        metadata: {
+          name: "Canvas Bag",
+          category: "bag",
+          image: "/images/product-bag-01.png",
+          description: "軽やかで収納力のあるバッグです。",
+          price: 12000,
+          sizes: ["M", "L"],
+          color: "brown",
+        },
+      }],
+    };
+  });
+
+  const response = await withGeminiResponse(
+    new Response(JSON.stringify({ embedding: { values: Array(768).fill(0.5) } }), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    }),
+    () => callWorker(
+      new Request("https://example.test/api/search", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ q: "収納力のあるバッグ" }),
+      }),
+      env,
+    ),
+  );
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    results: [{
+      id: "bag-01",
+      score: 0.876543,
+      name: "Canvas Bag",
+      category: "bag",
+      image: "/images/product-bag-01.png",
+      description: "軽やかで収納力のあるバッグです。",
+      price: 12000,
+      sizes: ["M", "L"],
+      color: "brown",
+    }],
+  });
+  assert.deepEqual(queriedValues, Array(768).fill(0.5));
+});
+
+test("POST /api/search rejects an empty JSON text query", async () => {
+  const response = await callWorker(
+    new Request("https://example.test/api/search", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ q: "" }),
+    }),
+    createEnvironment(async () => ({ matches: [] })),
+  );
+
+  assert.equal(response.status, 400);
+  assert.deepEqual(await response.json(), { error: "q must be 1 to 200 characters" });
+});
+
+test("POST /api/search rejects a JSON text query longer than 200 characters", async () => {
+  const response = await callWorker(
+    new Request("https://example.test/api/search", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ q: "a".repeat(201) }),
+    }),
+    createEnvironment(async () => ({ matches: [] })),
+  );
+
+  assert.equal(response.status, 400);
+  assert.deepEqual(await response.json(), { error: "q must be 1 to 200 characters" });
 });
 
 test("external search failures return a generic 502 without secrets or stack traces", async () => {

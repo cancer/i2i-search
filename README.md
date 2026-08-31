@@ -1,6 +1,6 @@
 # 商品画像の類似検索デモ
 
-Gemini の画像埋め込みと Cloudflare Vectorize を使って、商品画像から似た商品を検索するデモです。商品画像は Wikimedia Commons から取得した写真で、`public/images/` と `public/products.json` に含まれています。
+Gemini の画像・テキスト埋め込みと Cloudflare Vectorize を使って、商品画像や商品の特徴から似た商品を検索するデモです。商品画像は Wikimedia Commons から取得した写真で、`public/images/` と `public/products.json` に含まれています。
 
 ## セットアップと実行
 
@@ -23,6 +23,8 @@ npm run generate:images
 ```sh
 npm run enrich:products
 ```
+
+商品説明文は `products.json` には保存せず、投入時に Gemini で商品ページ向けの日本語説明文を生成し、画像と説明文の複合埋め込みとともに Vectorize の metadata へ保存します。
 
 ## 画像の出所と帰属
 
@@ -72,7 +74,7 @@ wrangler secret put GEMINI_API_KEY
 wrangler secret put INGEST_TOKEN     # 任意のランダム文字列
 ```
 
-UI をビルドして Worker をデプロイし、Worker エンドポイントから商品画像を投入します。
+UI をビルドして Worker をデプロイし、Worker エンドポイントから商品画像を投入します。投入では商品ごとに説明文の生成と複合埋め込みを行うため、画像埋め込みだけの場合より時間がかかります。
 
 ```sh
 npm run deploy
@@ -84,3 +86,7 @@ done
 ```
 
 ローカル開発（`wrangler dev`）でも `.dev.vars` に `GEMINI_API_KEY` と `INGEST_TOKEN` を書けば同じ手順で投入できます。API キーをソースコードや設定ファイルへ書き込まないでください。
+
+## テキスト検索
+
+検索パネルの入力欄から商品名や特徴を入力して検索すると、`POST /api/search` のテキスト埋め込み経由で Vectorize を検索します。単純な部分一致ではなく、商品説明文を含むセマンティック検索です。価格帯・サイズ・色のフィルタは画像検索と共通で適用されます。

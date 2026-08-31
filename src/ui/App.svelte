@@ -24,7 +24,17 @@
     name: string;
     category: string;
     image: string;
+    description?: string;
+    price?: number;
+    sizes?: string[];
+    color?: string;
     score?: number;
+  };
+
+  type FilterMetadata = {
+    price?: number;
+    sizes?: string[];
+    color?: string;
   };
 
   type Size = "S" | "M" | "L";
@@ -67,7 +77,7 @@
   let products = $state<Product[]>([]);
   let productsById = $derived(new Map(products.map((product) => [product.id, product])));
   let keywordText = $state("");
-  let keywordQuery = $derived(keywordText.trim().toLowerCase());
+  let keywordQuery = $derived(keywordText.trim());
   let results = $state<SearchResult[]>([]);
   let searchMode = $state<SearchMode>("keyword");
   let minimumPriceText = $state("");
@@ -88,32 +98,39 @@
     const lowerPrice = minimumPrice;
     const upperPrice = maximumPrice;
 
-    return (product: Product): boolean =>
-      (lowerPrice === undefined || product.price >= lowerPrice)
-      && (upperPrice === undefined || product.price <= upperPrice)
-      && (activeSizes.length === 0 || activeSizes.some((size) => product.sizes.includes(size)))
-      && (activeColors.length === 0 || activeColors.includes(product.color as Color));
+    return (metadata: FilterMetadata): boolean =>
+      (lowerPrice === undefined || (metadata.price !== undefined && metadata.price >= lowerPrice))
+      && (upperPrice === undefined || (metadata.price !== undefined && metadata.price <= upperPrice))
+      && (activeSizes.length === 0
+        || (metadata.sizes !== undefined && activeSizes.some((size) => metadata.sizes?.includes(size))))
+      && (activeColors.length === 0
+        || (metadata.color !== undefined && activeColors.includes(metadata.color as Color)));
   });
-  let keywordResults = $derived<SearchResult[]>(
-    products.filter((product) =>
-      (keywordQuery === ""
-        || product.name.toLowerCase().includes(keywordQuery)
-        || product.category.toLowerCase().includes(keywordQuery)
-        || product.credit.title.toLowerCase().includes(keywordQuery))
-      && matchesFilters(product),
-    ),
+  let filteredProducts = $derived<SearchResult[]>(
+    products
+      .filter((product) => matchesFilters(product))
+      .map((product) => ({
+        id: product.id,
+        name: product.name,
+        category: product.category,
+        image: product.image,
+      })),
   );
-  let imageResults = $derived<SearchResult[]>(
+  let filteredResults = $derived<SearchResult[]>(
     results.filter((result) => {
       const product = productsById.get(result.id);
-      return product !== undefined && matchesFilters(product);
+      return matchesFilters({
+        price: result.price ?? product?.price,
+        sizes: result.sizes ?? product?.sizes,
+        color: result.color ?? product?.color,
+      });
     }),
   );
   let displayedResults = $derived<SearchResult[]>(
-    searchMode === "image"
-      ? imageResults
-      : keywordQuery !== "" || hasMetadataFilters
-        ? keywordResults
+    searchMode === "image" || keywordQuery !== ""
+      ? filteredResults
+      : hasMetadataFilters
+        ? filteredProducts
         : [],
   );
   let loadingProducts = $state(true);
@@ -180,7 +197,13 @@
       && typeof value.category === "string"
       && typeof value.image === "string"
       && typeof value.score === "number"
-      && Number.isFinite(value.score);
+      && Number.isFinite(value.score)
+      && (value.description === undefined || typeof value.description === "string")
+      && (value.price === undefined
+        || (typeof value.price === "number" && Number.isFinite(value.price)))
+      && (value.sizes === undefined
+        || (Array.isArray(value.sizes) && value.sizes.every((size) => typeof size === "string")))
+      && (value.color === undefined || typeof value.color === "string");
   }
 
   function isProductList(value: unknown): value is Product[] {
@@ -226,7 +249,15 @@
     ++searchSeq;
     results = [];
     loadingSearch = false;
+    errorMessage = "";
     selectedFileName = "";
+  }
+
+  function handleKeywordKeydown(event: KeyboardEvent): void {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      void searchKeyword();
+    }
   }
 
   function handleMinimumPriceInput(event: Event): void {
@@ -254,6 +285,50 @@
     maximumPriceText = "";
     selectedSizes = [];
     selectedColors = [];
+  }
+
+  async function searchKeyword(): Promise<void> {
+    const currentSearchSeq = ++searchSeq;
+    const query = keywordText.trim();
+    searchMode = "keyword";
+    results = [];
+    selectedFileName = "";
+
+    if (query === "") {
+      loadingSearch = false;
+      errorMessage = "";
+      return;
+    }
+
+    loadingSearch = true;
+    errorMessage = "";
+
+    try {
+      const response = await fetch("/api/search", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ q: query }),
+      });
+      const payload: unknown = await response.json();
+      if (!response.ok) {
+        throw new Error(getErrorMessage(payload, "検索に失敗しました。"));
+      }
+      if (!isSearchResponse(payload)) {
+        throw new Error("検索結果の形式が正しくありません。");
+      }
+      if (currentSearchSeq === searchSeq) {
+        results = payload.results;
+      }
+    } catch (error) {
+      if (currentSearchSeq === searchSeq) {
+        errorMessage = error instanceof Error ? error.message : "検索に失敗しました。";
+        results = [];
+      }
+    } finally {
+      if (currentSearchSeq === searchSeq) {
+        loadingSearch = false;
+      }
+    }
   }
 
   async function search(file: File): Promise<void> {
@@ -372,7 +447,7 @@
   <section class="hero">
     <p class="eyebrow">IMAGE SEARCH DEMO</p>
     <h1>画像から、似ている商品を探す</h1>
-    <p class="intro">商品画像をアップロードするか、下の商品を選ぶと類似画像を検索できます。</p>
+    <p class="intro">商品画像をアップロードするか、商品名や特徴を入力すると似ている商品を検索できます。</p>
   </section>
 
   <section class="search-panel" aria-labelledby="search-title">
@@ -400,13 +475,24 @@
       <input id="image-input" type="file" accept="image/png,image/jpeg" onchange={chooseFile} />
     </label>
 
-    <input
-      class="keyword-filter"
-      type="search"
-      placeholder="キーワードで検索（商品名・カテゴリ）"
-      value={keywordText}
-      oninput={handleKeywordInput}
-    />
+    <div class="keyword-search">
+      <input
+        class="keyword-filter"
+        type="search"
+        placeholder="商品名や特徴でセマンティック検索"
+        value={keywordText}
+        oninput={handleKeywordInput}
+        onkeydown={handleKeywordKeydown}
+      />
+      <button
+        class="keyword-search-button"
+        type="button"
+        disabled={loadingSearch || keywordQuery === ""}
+        onclick={() => void searchKeyword()}
+      >
+        検索
+      </button>
+    </div>
 
     <div class="filter-controls" aria-label="商品情報で絞り込む">
       <div class="filter-row">
@@ -510,9 +596,12 @@
       <div class="result-grid">
         {#each displayedResults as result (result.id)}
           {@const product = productsById.get(result.id)}
+          {@const price = result.price ?? product?.price}
+          {@const sizes = result.sizes ?? product?.sizes}
+          {@const color = result.color ?? product?.color}
           <article class="result-card">
             <img
-              src={product?.image ?? result.image}
+              src={result.image}
               alt={product?.name ?? result.name}
               title={product ? getImageTitle(product) : result.name}
             />
@@ -525,16 +614,25 @@
                 <span class="score">{result.score.toFixed(3)}</span>
               {/if}
             </div>
-            {#if product}
+            {#if result.description}
+              <p class="result-description">{result.description}</p>
+            {/if}
+            {#if price !== undefined || sizes !== undefined || color !== undefined}
               <div class="product-metadata">
-                <span class="product-price">¥{product.price.toLocaleString("ja-JP")}</span>
-                <span>{product.sizes.join(" / ")}</span>
-                <span
-                  class="metadata-color"
-                  style={`--swatch-color: ${getColorSwatch(product.color)}`}
-                  title={getColorLabel(product.color)}
-                  aria-label={`色: ${getColorLabel(product.color)}`}
-                ></span>
+                {#if price !== undefined}
+                  <span class="product-price">¥{price.toLocaleString("ja-JP")}</span>
+                {/if}
+                {#if sizes !== undefined}
+                  <span>{sizes.join(" / ")}</span>
+                {/if}
+                {#if color !== undefined}
+                  <span
+                    class="metadata-color"
+                    style={`--swatch-color: ${getColorSwatch(color)}`}
+                    title={getColorLabel(color)}
+                    aria-label={`色: ${getColorLabel(color)}`}
+                  ></span>
+                {/if}
               </div>
             {/if}
           </article>
@@ -783,6 +881,18 @@
     font-size: 0.75rem;
   }
 
+  .result-description {
+    display: -webkit-box;
+    margin: 0;
+    overflow: hidden;
+    padding: 0 14px 12px;
+    color: #50483f;
+    font-size: 0.76rem;
+    line-height: 1.55;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
   .product-metadata {
     display: flex;
     align-items: center;
@@ -824,10 +934,16 @@
     margin-top: 72px;
   }
 
+  .keyword-search {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
   .keyword-filter {
     display: block;
+    flex: 1 1 auto;
     width: 100%;
-    margin-top: 24px;
     padding: 12px 14px;
     border: 1px solid #ded7cd;
     border-radius: 12px;
@@ -839,6 +955,30 @@
     border-color: #b45137;
     outline: 2px solid #e9c5b0;
     outline-offset: 2px;
+  }
+
+  .keyword-search-button {
+    flex: 0 0 auto;
+    padding: 0 18px;
+    border: 1px solid #b45137;
+    border-radius: 12px;
+    background: #b45137;
+    color: #fffaf2;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .keyword-search-button:hover,
+  .keyword-search-button:focus-visible {
+    background: #8b432d;
+    outline: 2px solid #e9c5b0;
+    outline-offset: 2px;
+  }
+
+  .keyword-search-button:disabled {
+    cursor: default;
+    opacity: 0.45;
   }
 
   .filter-controls {
