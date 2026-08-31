@@ -1,0 +1,290 @@
+[
+  {
+    "id": "bag-01",
+    "name": "Bag 01",
+    "category": "bag",
+    "image": "/images/product-bag-01.png"
+  },
+  {
+    "id": "bag-02",
+    "name": "Bag 02",
+    "category": "bag",
+    "image": "/images/product-bag-02.png"
+  },
+  {
+    "id": "bag-03",
+    "name": "Bag 03",
+    "category": "bag",
+    "image": "/images/product-bag-03.png"
+  },
+  {
+    "id": "bag-04",
+    "name": "Bag 04",
+    "category": "bag",
+    "image": "/images/product-bag-04.png"
+  },
+  {
+    "id": "bag-05",
+    "name": "Bag 05",
+    "category": "bag",
+    "image": "/images/product-bag-05.png"
+  },
+  {
+    "id": "bag-06",
+    "name": "Bag 06",
+    "category": "bag",
+    "image": "/images/product-bag-06.png"
+  },
+  {
+    "id": "bag-07",
+    "name": "Bag 07",
+    "category": "bag",
+    "image": "/images/product-bag-07.png"
+  },
+  {
+    "id": "bag-08",
+    "name": "Bag 08",
+    "category": "bag",
+    "image": "/images/product-bag-08.png"
+  },
+  {
+    "id": "shoes-01",
+    "name": "Shoes 01",
+    "category": "shoes",
+    "image": "/images/product-shoes-01.png"
+  },
+  {
+    "id": "shoes-02",
+    "name": "Shoes 02",
+    "category": "shoes",
+    "image": "/images/product-shoes-02.png"
+  },
+  {
+    "id": "shoes-03",
+    "name": "Shoes 03",
+    "category": "shoes",
+    "image": "/images/product-shoes-03.png"
+  },
+  {
+    "id": "shoes-04",
+    "name": "Shoes 04",
+    "category": "shoes",
+    "image": "/images/product-shoes-04.png"
+  },
+  {
+    "id": "shoes-05",
+    "name": "Shoes 05",
+    "category": "shoes",
+    "image": "/images/product-shoes-05.png"
+  },
+  {
+    "id": "shoes-06",
+    "name": "Shoes 06",
+    "category": "shoes",
+    "image": "/images/product-shoes-06.png"
+  },
+  {
+    "id": "shoes-07",
+    "name": "Shoes 07",
+    "category": "shoes",
+    "image": "/images/product-shoes-07.png"
+  },
+  {
+    "id": "shoes-08",
+    "name": "Shoes 08",
+    "category": "shoes",
+    "image": "/images/product-shoes-08.png"
+  },
+  {
+    "id": "chair-01",
+    "name": "Chair 01",
+    "category": "chair",
+    "image": "/images/product-chair-01.png"
+  },
+  {
+    "id": "chair-02",
+    "name": "Chair 02",
+    "category": "chair",
+    "image": "/images/product-chair-02.png"
+  },
+  {
+    "id": "chair-03",
+    "name": "Chair 03",
+    "category": "chair",
+    "image": "/images/product-chair-03.png"
+  },
+  {
+    "id": "chair-04",
+    "name": "Chair 04",
+    "category": "chair",
+    "image": "/images/product-chair-04.png"
+  },
+  {
+    "id": "chair-05",
+    "name": "Chair 05",
+    "category": "chair",
+    "image": "/images/product-chair-05.png"
+  },
+  {
+    "id": "chair-06",
+    "name": "Chair 06",
+    "category": "chair",
+    "image": "/images/product-chair-06.png"
+  },
+  {
+    "id": "chair-07",
+    "name": "Chair 07",
+    "category": "chair",
+    "image": "/images/product-chair-07.png"
+  },
+  {
+    "id": "chair-08",
+    "name": "Chair 08",
+    "category": "chair",
+    "image": "/images/product-chair-08.png"
+  },
+  {
+    "id": "mug-01",
+    "name": "Mug 01",
+    "category": "mug",
+    "image": "/images/product-mug-01.png"
+  },
+  {
+    "id": "mug-02",
+    "name": "Mug 02",
+    "category": "mug",
+    "image": "/images/product-mug-02.png"
+  },
+  {
+    "id": "mug-03",
+    "name": "Mug 03",
+    "category": "mug",
+    "image": "/images/product-mug-03.png"
+  },
+  {
+    "id": "mug-04",
+    "name": "Mug 04",
+    "category": "mug",
+    "image": "/images/product-mug-04.png"
+  },
+  {
+    "id": "mug-05",
+    "name": "Mug 05",
+    "category": "mug",
+    "image": "/images/product-mug-05.png"
+  },
+  {
+    "id": "mug-06",
+    "name": "Mug 06",
+    "category": "mug",
+    "image": "/images/product-mug-06.png"
+  },
+  {
+    "id": "mug-07",
+    "name": "Mug 07",
+    "category": "mug",
+    "image": "/images/product-mug-07.png"
+  },
+  {
+    "id": "mug-08",
+    "name": "Mug 08",
+    "category": "mug",
+    "image": "/images/product-mug-08.png"
+  },
+  {
+    "id": "watch-01",
+    "name": "Watch 01",
+    "category": "watch",
+    "image": "/images/product-watch-01.png"
+  },
+  {
+    "id": "watch-02",
+    "name": "Watch 02",
+    "category": "watch",
+    "image": "/images/product-watch-02.png"
+  },
+  {
+    "id": "watch-03",
+    "name": "Watch 03",
+    "category": "watch",
+    "image": "/images/product-watch-03.png"
+  },
+  {
+    "id": "watch-04",
+    "name": "Watch 04",
+    "category": "watch",
+    "image": "/images/product-watch-04.png"
+  },
+  {
+    "id": "watch-05",
+    "name": "Watch 05",
+    "category": "watch",
+    "image": "/images/product-watch-05.png"
+  },
+  {
+    "id": "watch-06",
+    "name": "Watch 06",
+    "category": "watch",
+    "image": "/images/product-watch-06.png"
+  },
+  {
+    "id": "watch-07",
+    "name": "Watch 07",
+    "category": "watch",
+    "image": "/images/product-watch-07.png"
+  },
+  {
+    "id": "watch-08",
+    "name": "Watch 08",
+    "category": "watch",
+    "image": "/images/product-watch-08.png"
+  },
+  {
+    "id": "lamp-01",
+    "name": "Lamp 01",
+    "category": "lamp",
+    "image": "/images/product-lamp-01.png"
+  },
+  {
+    "id": "lamp-02",
+    "name": "Lamp 02",
+    "category": "lamp",
+    "image": "/images/product-lamp-02.png"
+  },
+  {
+    "id": "lamp-03",
+    "name": "Lamp 03",
+    "category": "lamp",
+    "image": "/images/product-lamp-03.png"
+  },
+  {
+    "id": "lamp-04",
+    "name": "Lamp 04",
+    "category": "lamp",
+    "image": "/images/product-lamp-04.png"
+  },
+  {
+    "id": "lamp-05",
+    "name": "Lamp 05",
+    "category": "lamp",
+    "image": "/images/product-lamp-05.png"
+  },
+  {
+    "id": "lamp-06",
+    "name": "Lamp 06",
+    "category": "lamp",
+    "image": "/images/product-lamp-06.png"
+  },
+  {
+    "id": "lamp-07",
+    "name": "Lamp 07",
+    "category": "lamp",
+    "image": "/images/product-lamp-07.png"
+  },
+  {
+    "id": "lamp-08",
+    "name": "Lamp 08",
+    "category": "lamp",
+    "image": "/images/product-lamp-08.png"
+  }
+]
