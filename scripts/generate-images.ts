@@ -4,29 +4,62 @@ import path from "node:path";
 import sharp from "sharp";
 
 type Category = "bag" | "shoes" | "chair" | "mug" | "watch" | "lamp";
-type Pattern = "solid" | "stripes" | "dots" | "checks";
 
-interface Variant {
-  primary: string;
-  secondary: string;
-  accent: string;
-  pattern: Pattern;
-  scale: number;
-  rotation: number;
+interface Credit {
+  title: string;
+  author: string;
+  license: string;
+  source: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  category: Category;
+  image: string;
+  credit: Credit;
+}
+
+interface CommonsMetadataValue {
+  value?: unknown;
+}
+
+interface CommonsImageInfo {
+  url?: unknown;
+  thumburl?: unknown;
+  mime?: unknown;
+  descriptionurl?: unknown;
+  extmetadata?: Record<string, CommonsMetadataValue>;
+}
+
+interface CommonsPage {
+  pageid?: unknown;
+  index?: unknown;
+  title?: unknown;
+  imageinfo?: CommonsImageInfo[];
+}
+
+interface CommonsCandidate {
+  key: string;
+  imageUrl: string;
+  credit: Credit;
+}
+
+interface PreparedProduct {
+  product: Product;
+  image: Buffer;
 }
 
 const categories: Category[] = ["bag", "shoes", "chair", "mug", "watch", "lamp"];
 
-const variants: Variant[] = [
-  { primary: "#d97757", secondary: "#f6c6a8", accent: "#713f32", pattern: "solid", scale: 0.94, rotation: -4 },
-  { primary: "#335c67", secondary: "#8ec5c9", accent: "#19383e", pattern: "stripes", scale: 1.04, rotation: 3 },
-  { primary: "#e7b84b", secondary: "#fff1b8", accent: "#72551a", pattern: "dots", scale: 0.98, rotation: -2 },
-  { primary: "#805b9b", secondary: "#d9b9e9", accent: "#432d57", pattern: "checks", scale: 1.08, rotation: 5 },
-  { primary: "#4d8061", secondary: "#b9d7ae", accent: "#2c4e3a", pattern: "stripes", scale: 0.9, rotation: 2 },
-  { primary: "#d65a75", secondary: "#ffc1ca", accent: "#6f293b", pattern: "dots", scale: 1.02, rotation: -5 },
-  { primary: "#4f6d9a", secondary: "#b8c9e8", accent: "#283c61", pattern: "checks", scale: 1.06, rotation: 1 },
-  { primary: "#bd8451", secondary: "#efd0a4", accent: "#674127", pattern: "solid", scale: 0.96, rotation: -1 },
-];
+const searchTerms: Record<Category, string[]> = {
+  bag: ["handbag photograph", "leather handbag", "shoulder bag"],
+  shoes: ["sneaker product", "sneakers shoes", "footwear"],
+  chair: ["chair product photograph", "chair furniture", "armchair"],
+  mug: ["ceramic mug photograph", "coffee mug product", "drinking mug"],
+  watch: ["wristwatch product", "wrist watch", "watch"],
+  lamp: ["desk lamp product", "table lamp", "lamp"],
+};
 
 const categoryNames: Record<Category, string> = {
   bag: "Bag",
@@ -37,75 +70,252 @@ const categoryNames: Record<Category, string> = {
   lamp: "Lamp",
 };
 
-function patternDefinition(id: string, variant: Variant): string {
-  const { primary, secondary } = variant;
-  switch (variant.pattern) {
-    case "stripes":
-      return `<pattern id="${id}" width="36" height="36" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><rect width="36" height="36" fill="${primary}"/><rect width="12" height="36" fill="${secondary}" opacity="0.72"/></pattern>`;
-    case "dots":
-      return `<pattern id="${id}" width="32" height="32" patternUnits="userSpaceOnUse"><rect width="32" height="32" fill="${primary}"/><circle cx="8" cy="8" r="5" fill="${secondary}" opacity="0.8"/><circle cx="24" cy="24" r="5" fill="${secondary}" opacity="0.8"/></pattern>`;
-    case "checks":
-      return `<pattern id="${id}" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="${primary}"/><rect width="20" height="20" fill="${secondary}" opacity="0.65"/><rect x="20" y="20" width="20" height="20" fill="${secondary}" opacity="0.65"/></pattern>`;
-    case "solid":
-      return `<pattern id="${id}" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="${primary}"/></pattern>`;
+const commonsApiUrl = "https://commons.wikimedia.org/w/api.php";
+const userAgent = "i2i-search-demo/1.0 (https://github.com/cancer/i2i-search)";
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function getString(value: unknown): string | undefined {
+  return typeof value === "string" && value.length > 0 ? value : undefined;
+}
+
+function getIdentifier(value: unknown): string | undefined {
+  if (typeof value === "number" && Number.isInteger(value)) {
+    return String(value);
   }
+  return getString(value);
 }
 
-function productShape(category: Category, variant: Variant, fillId: string): string {
-  const { accent, secondary, rotation, scale } = variant;
-  const transform = `translate(256 270) rotate(${rotation}) scale(${scale}) translate(-256 -270)`;
+function decodeHtmlEntities(value: string): string {
+  const namedEntities: Record<string, string> = {
+    amp: "&",
+    apos: "'",
+    gt: ">",
+    lt: "<",
+    nbsp: " ",
+    quot: '"',
+  };
 
-  switch (category) {
-    case "bag":
-      return `<g transform="${transform}"><path d="M136 192h240l-18 214H154z" fill="url(#${fillId})" stroke="${accent}" stroke-width="7"/><path d="M188 198c0-74 30-108 68-108s68 34 68 108" fill="none" stroke="${accent}" stroke-width="18" stroke-linecap="round"/><path d="M171 294h170v82H171z" fill="${secondary}" opacity="0.72"/><path d="M256 294v82" stroke="${accent}" stroke-width="4" opacity="0.55"/><circle cx="256" cy="322" r="8" fill="${accent}"/></g>`;
-    case "shoes":
-      return `<g transform="${transform}"><path d="M120 184c24 28 54 48 94 60l70 22c22 7 38 28 38 51v20H112c-13 0-23-10-23-23v-24c0-15 9-28 23-34l28-13c16-8 21-29 17-59z" fill="${secondary}" stroke="${accent}" stroke-width="7"/><path d="M148 162c24 28 54 48 94 60l70 22c22 7 38 28 38 51v20H140c-13 0-23-10-23-23v-24c0-15 9-28 23-34l28-13c16-8 21-29 17-59z" fill="url(#${fillId})" stroke="${accent}" stroke-width="7"/><path d="M168 240c35 13 84 23 139 26" fill="none" stroke="${secondary}" stroke-width="8" opacity="0.75"/><path d="M181 260l-21-39m49 47-20-43m48 50-18-42" stroke="${accent}" stroke-width="5" stroke-linecap="round" opacity="0.65"/><path d="M143 313h204" stroke="${accent}" stroke-width="5" opacity="0.6"/></g>`;
-    case "chair":
-      return `<g transform="${transform}"><rect x="164" y="92" width="184" height="206" rx="34" fill="url(#${fillId})" stroke="${accent}" stroke-width="7"/><path d="M142 273h228c14 0 25 11 25 25v18H117v-18c0-14 11-25 25-25z" fill="${secondary}" stroke="${accent}" stroke-width="7"/><path d="M151 316l-20 105m230-105 20 105M185 319l-6 102m148-102 6 102" stroke="${accent}" stroke-width="12" stroke-linecap="round"/><path d="M195 135h122" stroke="${secondary}" stroke-width="9" opacity="0.72" stroke-linecap="round"/></g>`;
-    case "mug":
-      return `<g transform="${transform}"><path d="M143 145h202v190c0 60-40 94-101 94s-101-34-101-94z" fill="url(#${fillId})" stroke="${accent}" stroke-width="7"/><path d="M345 193h37c37 0 57 24 57 60s-20 60-57 60h-38" fill="none" stroke="${accent}" stroke-width="17"/><path d="M154 171h180" stroke="${secondary}" stroke-width="9" opacity="0.8"/><ellipse cx="244" cy="145" rx="101" ry="25" fill="${secondary}" stroke="${accent}" stroke-width="7"/><ellipse cx="244" cy="145" rx="72" ry="13" fill="${accent}" opacity="0.32"/></g>`;
-    case "watch":
-      return `<g transform="${transform}"><rect x="201" y="65" width="110" height="410" rx="40" fill="${secondary}" stroke="${accent}" stroke-width="7"/><rect x="186" y="150" width="140" height="240" rx="65" fill="url(#${fillId})" stroke="${accent}" stroke-width="8"/><circle cx="256" cy="270" r="82" fill="${secondary}" stroke="${accent}" stroke-width="7"/><circle cx="256" cy="270" r="70" fill="url(#${fillId})" stroke="${accent}" stroke-width="4"/><path d="M256 270v-45m0 45 35 22" stroke="${accent}" stroke-width="8" stroke-linecap="round"/><circle cx="256" cy="270" r="8" fill="${accent}"/><path d="M256 211v11m0 96v11m-59-59h11m96 0h11" stroke="${accent}" stroke-width="5" stroke-linecap="round"/></g>`;
-    case "lamp":
-      return `<g transform="${transform}"><path d="M150 134h212l-35 137H185z" fill="url(#${fillId})" stroke="${accent}" stroke-width="7"/><path d="M178 135h156" stroke="${secondary}" stroke-width="10" opacity="0.75"/><path d="M256 272v111" stroke="${accent}" stroke-width="12" stroke-linecap="round"/><path d="M203 401h106" stroke="${accent}" stroke-width="13" stroke-linecap="round"/><path d="M225 383h62" stroke="${secondary}" stroke-width="7" stroke-linecap="round"/></g>`;
+  return value.replace(/&(#(?:x[\da-f]+|\d+)|[a-z\d]+);/gi, (match, entity: string) => {
+    if (entity.startsWith("#x")) {
+      return String.fromCodePoint(Number.parseInt(entity.slice(2), 16));
+    }
+    if (entity.startsWith("#")) {
+      return String.fromCodePoint(Number.parseInt(entity.slice(1), 10));
+    }
+    return namedEntities[entity.toLowerCase()] ?? match;
+  });
+}
+
+function cleanHtml(value: string): string {
+  return decodeHtmlEntities(value.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim());
+}
+
+function metadataText(
+  metadata: Record<string, CommonsMetadataValue> | undefined,
+  key: string,
+): string | undefined {
+  const value = metadata?.[key]?.value;
+  const text = getString(value);
+  if (!text) {
+    return undefined;
   }
+  const cleaned = cleanHtml(text);
+  return cleaned || undefined;
 }
 
-function productSvg(category: Category, index: number, variant: Variant): string {
-  const id = `${category}-${String(index).padStart(2, "0")}`;
-  const fillId = `pattern-${id}`;
-  const label = `${categoryNames[category].toUpperCase()} ${String(index).padStart(2, "0")}`;
+function getCommonsPages(payload: unknown): CommonsPage[] {
+  if (!isRecord(payload) || !isRecord(payload.query) || !isRecord(payload.query.pages)) {
+    throw new Error("Commons API の検索結果の形式が正しくありません。");
+  }
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><defs><linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffdf8"/><stop offset="1" stop-color="#e9e4da"/></linearGradient>${patternDefinition(fillId, variant)}</defs><rect width="512" height="512" rx="36" fill="url(#background)"/><circle cx="432" cy="78" r="48" fill="#ffffff" opacity="0.45"/><ellipse cx="256" cy="431" rx="155" ry="20" fill="#6c6257" opacity="0.16"/>${productShape(category, variant, fillId)}<text x="256" y="478" text-anchor="middle" fill="#423b35" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">${label}</text></svg>`;
+  return Object.values(payload.query.pages)
+    .filter((page): page is CommonsPage => isRecord(page))
+    .sort((left, right) => {
+      const leftIndex = typeof left.index === "number" ? left.index : Number.MAX_SAFE_INTEGER;
+      const rightIndex = typeof right.index === "number" ? right.index : Number.MAX_SAFE_INTEGER;
+      return leftIndex - rightIndex;
+    });
 }
 
-const products = categories.flatMap((category) =>
-  variants.map((variant, index) => {
-    const id = `${category}-${String(index + 1).padStart(2, "0")}`;
-    return {
-      id,
-      name: `${categoryNames[category]} ${String(index + 1).padStart(2, "0")}`,
-      category,
-      image: `/images/product-${id}.png`,
-      svg: productSvg(category, index + 1, variant),
-    };
-  }),
-);
-
-const projectRoot = process.cwd();
-const imagesDirectory = path.join(projectRoot, "public", "images");
-const productsPath = path.join(projectRoot, "public", "products.json");
-
-await mkdir(imagesDirectory, { recursive: true });
-
-for (const product of products) {
-  await sharp(Buffer.from(product.svg)).png().toFile(path.join(imagesDirectory, `product-${product.id}.png`));
+function createSearchUrl(searchTerm: string): string {
+  const params = new URLSearchParams({
+    action: "query",
+    generator: "search",
+    gsrnamespace: "6",
+    gsrsearch: `${searchTerm} filetype:bitmap`,
+    gsrlimit: "50",
+    prop: "imageinfo",
+    iiprop: "url|mime|extmetadata",
+    iiurlwidth: "1024",
+    format: "json",
+    origin: "*",
+  });
+  return `${commonsApiUrl}?${params}`;
 }
 
-await writeFile(
-  productsPath,
-  `${JSON.stringify(products.map(({ svg: _svg, ...product }) => product), null, 2)}\n`,
-  "utf8",
-);
+async function searchCommons(searchTerm: string): Promise<CommonsPage[]> {
+  const response = await fetch(createSearchUrl(searchTerm), {
+    headers: { "user-agent": userAgent },
+  });
+  if (!response.ok) {
+    throw new Error(`Commons API の検索に失敗しました: HTTP ${response.status}`);
+  }
+  return getCommonsPages(await response.json());
+}
 
-console.log(`Generated ${products.length} product images.`);
+function createCandidate(page: CommonsPage): CommonsCandidate | undefined {
+  const imageInfo = page.imageinfo?.[0];
+  if (!imageInfo) {
+    return undefined;
+  }
+
+  const mime = getString(imageInfo.mime);
+  if (mime !== "image/jpeg" && mime !== "image/png") {
+    return undefined;
+  }
+
+  const license = metadataText(imageInfo.extmetadata, "LicenseShortName");
+  if (!license) {
+    return undefined;
+  }
+
+  const imageUrl = getString(imageInfo.thumburl) ?? getString(imageInfo.url);
+  const source = getString(imageInfo.descriptionurl);
+  if (!imageUrl || !source) {
+    return undefined;
+  }
+
+  const pageTitle = getString(page.title)?.replace(/^File:/i, "") ?? "Untitled image";
+  const title = metadataText(imageInfo.extmetadata, "ObjectName") ?? cleanHtml(pageTitle);
+  const author = metadataText(imageInfo.extmetadata, "Artist") ?? "Unknown author";
+  const pageId = getIdentifier(page.pageid) ?? source;
+
+  return {
+    key: pageId,
+    imageUrl,
+    credit: { title, author, license, source },
+  };
+}
+
+async function retryOnce<T>(operation: () => Promise<T>): Promise<T> {
+  let lastError: unknown;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      return await operation();
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error("処理に失敗しました。");
+}
+
+async function downloadAndConvert(candidate: CommonsCandidate): Promise<Buffer> {
+  const response = await fetch(candidate.imageUrl, {
+    headers: { "user-agent": userAgent },
+  });
+  if (!response.ok) {
+    throw new Error(`画像のダウンロードに失敗しました: HTTP ${response.status}`);
+  }
+
+  return sharp(Buffer.from(await response.arrayBuffer()))
+    .resize({ width: 512, height: 512, fit: "cover" })
+    .png()
+    .toBuffer();
+}
+
+async function prepareCategory(category: Category): Promise<PreparedProduct[]> {
+  const selected: PreparedProduct[] = [];
+  const seenCandidates = new Set<string>();
+  const usedTerms: string[] = [];
+  let skippedCandidates = 0;
+
+  for (const searchTerm of searchTerms[category]) {
+    if (selected.length >= 8) {
+      break;
+    }
+    usedTerms.push(searchTerm);
+
+    let pages: CommonsPage[];
+    try {
+      pages = await retryOnce(() => searchCommons(searchTerm));
+    } catch (error) {
+      console.warn(`${category}: 検索語「${searchTerm}」をスキップしました (${String(error)}).`);
+      continue;
+    }
+
+    for (const page of pages) {
+      if (selected.length >= 8) {
+        break;
+      }
+
+      const candidate = createCandidate(page);
+      const candidateKey = candidate?.key ?? getIdentifier(page.pageid) ?? getString(page.title);
+      if (!candidateKey || seenCandidates.has(candidateKey)) {
+        skippedCandidates += 1;
+        continue;
+      }
+      seenCandidates.add(candidateKey);
+
+      if (!candidate) {
+        skippedCandidates += 1;
+        continue;
+      }
+
+      try {
+        const image = await retryOnce(() => downloadAndConvert(candidate));
+        const index = selected.length + 1;
+        const id = `${category}-${String(index).padStart(2, "0")}`;
+        selected.push({
+          image,
+          product: {
+            id,
+            name: `${categoryNames[category]} ${String(index).padStart(2, "0")}`,
+            category,
+            image: `/images/product-${id}.png`,
+            credit: candidate.credit,
+          },
+        });
+      } catch (error) {
+        skippedCandidates += 1;
+        console.warn(`${category}: 候補をスキップしました (${candidate.imageUrl}, ${String(error)}).`);
+      }
+    }
+  }
+
+  console.log(
+    `${category}: 採用 ${selected.length}/8, 検索語 ${usedTerms.join(" / ")}, スキップ ${skippedCandidates}`,
+  );
+
+  if (selected.length < 8) {
+    throw new Error(`${category} の画像を 8 枚確保できませんでした。`);
+  }
+  return selected;
+}
+
+async function generateImages(): Promise<void> {
+  const preparedProducts: PreparedProduct[] = [];
+  for (const category of categories) {
+    preparedProducts.push(...await prepareCategory(category));
+  }
+
+  const projectRoot = process.cwd();
+  const imagesDirectory = path.join(projectRoot, "public", "images");
+  const productsPath = path.join(projectRoot, "public", "products.json");
+  await mkdir(imagesDirectory, { recursive: true });
+
+  for (const { product, image } of preparedProducts) {
+    await writeFile(path.join(imagesDirectory, `product-${product.id}.png`), image);
+  }
+  await writeFile(
+    productsPath,
+    `${JSON.stringify(preparedProducts.map(({ product }) => product), null, 2)}\n`,
+    "utf8",
+  );
+
+  console.log(`Generated ${preparedProducts.length} product images from Wikimedia Commons.`);
+}
+
+await generateImages();

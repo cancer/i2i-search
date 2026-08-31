@@ -8,13 +8,20 @@
     name: string;
     category: string;
     image: string;
+    credit: {
+      title: string;
+      author: string;
+      license: string;
+      source: string;
+    };
   };
 
-  type SearchResult = Product & {
+  type SearchResult = Omit<Product, "credit"> & {
     score: number;
   };
 
   let products = $state<Product[]>([]);
+  let productsById = $derived(new Map(products.map((product) => [product.id, product])));
   let results = $state<SearchResult[]>([]);
   let loadingProducts = $state(true);
   let loadingSearch = $state(false);
@@ -26,16 +33,31 @@
     return typeof value === "object" && value !== null;
   }
 
+  function isCredit(value: unknown): value is Product["credit"] {
+    return isRecord(value)
+      && typeof value.title === "string"
+      && typeof value.author === "string"
+      && typeof value.license === "string"
+      && typeof value.source === "string";
+  }
+
   function isProduct(value: unknown): value is Product {
     return isRecord(value)
       && typeof value.id === "string"
       && typeof value.name === "string"
       && typeof value.category === "string"
-      && typeof value.image === "string";
+      && typeof value.image === "string"
+      && isCredit(value.credit);
   }
 
   function isSearchResult(value: unknown): value is SearchResult {
-    return isProduct(value) && typeof value.score === "number" && Number.isFinite(value.score);
+    return isRecord(value)
+      && typeof value.id === "string"
+      && typeof value.name === "string"
+      && typeof value.category === "string"
+      && typeof value.image === "string"
+      && typeof value.score === "number"
+      && Number.isFinite(value.score);
   }
 
   function isProductList(value: unknown): value is Product[] {
@@ -48,6 +70,10 @@
 
   function getErrorMessage(value: unknown, fallback: string): string {
     return isRecord(value) && typeof value.error === "string" ? value.error : fallback;
+  }
+
+  function getImageTitle(product: Product): string {
+    return `${product.name} — ${product.credit.author} / ${product.credit.license} (Wikimedia Commons)`;
   }
 
   async function loadProducts(): Promise<void> {
@@ -221,8 +247,13 @@
     {#if results.length > 0}
       <div class="result-grid">
         {#each results as result (result.id)}
+          {@const product = productsById.get(result.id)}
           <article class="result-card">
-            <img src={result.image} alt={result.name} />
+            <img
+              src={result.image}
+              alt={result.name}
+              title={product ? getImageTitle(product) : result.name}
+            />
             <div class="card-details">
               <div>
                 <h3>{result.name}</h3>
@@ -255,7 +286,12 @@
       <div class="catalog-grid">
         {#each products as product (product.id)}
           <button class="product-card" type="button" onclick={() => void searchProduct(product)}>
-            <img src={product.image} alt={product.name} loading="lazy" />
+            <img
+              src={product.image}
+              alt={product.name}
+              title={getImageTitle(product)}
+              loading="lazy"
+            />
             <span class="product-name">{product.name}</span>
             <span class="product-category">{product.category}</span>
           </button>
@@ -263,6 +299,8 @@
       </div>
     {/if}
   </section>
+
+  <footer class="attribution">Photos: Wikimedia Commons（各画像の帰属は画像の title 属性を参照）</footer>
 </main>
 
 <style>
@@ -522,6 +560,13 @@
     padding-top: 4px;
     padding-bottom: 12px;
     text-transform: uppercase;
+  }
+
+  .attribution {
+    margin-top: 28px;
+    color: #8a8178;
+    font-size: 0.75rem;
+    text-align: center;
   }
 
   @media (max-width: 900px) {

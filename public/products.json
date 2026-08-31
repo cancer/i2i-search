@@ -3,288 +3,576 @@
     "id": "bag-01",
     "name": "Bag 01",
     "category": "bag",
-    "image": "/images/product-bag-01.png"
+    "image": "/images/product-bag-01.png",
+    "credit": {
+      "title": "Handbag at Nordstrom Rack - Santa Rosa - December 2022 - Sarah Stierch",
+      "author": "Missvain",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Handbag_at_Nordstrom_Rack_-_Santa_Rosa_-_December_2022_-_Sarah_Stierch.jpg"
+    }
   },
   {
     "id": "bag-02",
     "name": "Bag 02",
     "category": "bag",
-    "image": "/images/product-bag-02.png"
+    "image": "/images/product-bag-02.png",
+    "credit": {
+      "title": "Stingray skin handbag (48645301521)",
+      "author": "Thomas Quine",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Stingray_skin_handbag_(48645301521).jpg"
+    }
   },
   {
     "id": "bag-03",
     "name": "Bag 03",
     "category": "bag",
-    "image": "/images/product-bag-03.png"
+    "image": "/images/product-bag-03.png",
+    "credit": {
+      "title": "Leather handbag by Les cuirs d'Agathe (DSC07738)",
+      "author": "Trougnouf (Benoit Brummer) , Les cuirs d'Agathe",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Leather_handbag_by_Les_cuirs_d%27Agathe_(DSC07738).jpg"
+    }
   },
   {
     "id": "bag-04",
     "name": "Bag 04",
     "category": "bag",
-    "image": "/images/product-bag-04.png"
+    "image": "/images/product-bag-04.png",
+    "credit": {
+      "title": "Kangaroo handbag (48566656186)",
+      "author": "Thomas Quine",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Kangaroo_handbag_(48566656186).jpg"
+    }
   },
   {
     "id": "bag-05",
     "name": "Bag 05",
     "category": "bag",
-    "image": "/images/product-bag-05.png"
+    "image": "/images/product-bag-05.png",
+    "credit": {
+      "title": "Crocodile skin handbag (48650078886)",
+      "author": "Thomas Quine",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Crocodile_skin_handbag_(48650078886).jpg"
+    }
   },
   {
     "id": "bag-06",
     "name": "Bag 06",
     "category": "bag",
-    "image": "/images/product-bag-06.png"
+    "image": "/images/product-bag-06.png",
+    "credit": {
+      "title": "A handbag^ - geograph.org.uk - 5695438",
+      "author": "Richard Webb",
+      "license": "CC BY-SA 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:A_handbag%5E_-_geograph.org.uk_-_5695438.jpg"
+    }
   },
   {
     "id": "bag-07",
     "name": "Bag 07",
     "category": "bag",
-    "image": "/images/product-bag-07.png"
+    "image": "/images/product-bag-07.png",
+    "credit": {
+      "title": "Flora Cheng's handbag and business card box 20220716",
+      "author": "Solomon203",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Flora_Cheng%27s_handbag_and_business_card_box_20220716.jpg"
+    }
   },
   {
     "id": "bag-08",
     "name": "Bag 08",
     "category": "bag",
-    "image": "/images/product-bag-08.png"
+    "image": "/images/product-bag-08.png",
+    "credit": {
+      "title": "Portrait, woman, handbag Fortepan 11924",
+      "author": "FOTO:Fortepan — ID 11924 : Adományozó/Donor: Privát Fotó és Film Archívum-Höfler Tibor gyűjtemény.",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Portrait,_woman,_handbag_Fortepan_11924.jpg"
+    }
   },
   {
     "id": "shoes-01",
     "name": "Shoes 01",
     "category": "shoes",
-    "image": "/images/product-shoes-01.png"
+    "image": "/images/product-shoes-01.png",
+    "credit": {
+      "title": "Superga Leahorseu Sneaker 2750 Poni blau (1)",
+      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Superga_Leahorseu_Sneaker_2750_Poni_blau_(1).jpg"
+    }
   },
   {
     "id": "shoes-02",
     "name": "Shoes 02",
     "category": "shoes",
-    "image": "/images/product-shoes-02.png"
+    "image": "/images/product-shoes-02.png",
+    "credit": {
+      "title": "Superga Macramew Sneaker 2750 Spitze rosa (1)",
+      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Superga_Macramew_Sneaker_2750_Spitze_rosa_(1).jpg"
+    }
   },
   {
     "id": "shoes-03",
     "name": "Shoes 03",
     "category": "shoes",
-    "image": "/images/product-shoes-03.png"
+    "image": "/images/product-shoes-03.png",
+    "credit": {
+      "title": "Superga 2750 Microfiber Sneaker Lederoptik weiß (3)",
+      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Superga_2750_Microfiber_Sneaker_Lederoptik_wei%C3%9F_(3).jpg"
+    }
   },
   {
     "id": "shoes-04",
     "name": "Shoes 04",
     "category": "shoes",
-    "image": "/images/product-shoes-04.png"
+    "image": "/images/product-shoes-04.png",
+    "credit": {
+      "title": "Superga 2750 Microfiber Sneaker Lederoptik schwarz (1)",
+      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Superga_2750_Microfiber_Sneaker_Lederoptik_schwarz_(1).jpg"
+    }
   },
   {
     "id": "shoes-05",
     "name": "Shoes 05",
     "category": "shoes",
-    "image": "/images/product-shoes-05.png"
+    "image": "/images/product-shoes-05.png",
+    "credit": {
+      "title": "Superga Cotu Classic Sneaker 2750 Canvas weiß (1)",
+      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_wei%C3%9F_(1).jpg"
+    }
   },
   {
     "id": "shoes-06",
     "name": "Shoes 06",
     "category": "shoes",
-    "image": "/images/product-shoes-06.png"
+    "image": "/images/product-shoes-06.png",
+    "credit": {
+      "title": "Michael Kors Kristy Lace Up Sneaker 43S4KRFS2E Kalbsleder braun (1) (16286299927)",
+      "author": "SPERA.de Designerschuhe, Taschen und Accessoires from Deutschland",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Michael_Kors_Kristy_Lace_Up_Sneaker_43S4KRFS2E_Kalbsleder_braun_(1)_(16286299927).jpg"
+    }
   },
   {
     "id": "shoes-07",
     "name": "Shoes 07",
     "category": "shoes",
-    "image": "/images/product-shoes-07.png"
+    "image": "/images/product-shoes-07.png",
+    "credit": {
+      "title": "Superga Cotu Classic Sneaker 2750 Canvas blau (3)",
+      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_blau_(3).jpg"
+    }
   },
   {
     "id": "shoes-08",
     "name": "Shoes 08",
     "category": "shoes",
-    "image": "/images/product-shoes-08.png"
+    "image": "/images/product-shoes-08.png",
+    "credit": {
+      "title": "Superga Cotu Classic Sneaker 2750 Canvas blau (2)",
+      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_blau_(2).jpg"
+    }
   },
   {
     "id": "chair-01",
     "name": "Chair 01",
     "category": "chair",
-    "image": "/images/product-chair-01.png"
+    "image": "/images/product-chair-01.png",
+    "credit": {
+      "title": "Santorin (GR), Fira -- 2017 -- 2598",
+      "author": "Dietmar Rabich",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Santorin_(GR),_Fira_--_2017_--_2598.jpg"
+    }
   },
   {
     "id": "chair-02",
     "name": "Chair 02",
     "category": "chair",
-    "image": "/images/product-chair-02.png"
+    "image": "/images/product-chair-02.png",
+    "credit": {
+      "title": "Rügen, Beach at Sellin -- 2009 -- 1173",
+      "author": "Dietmar Rabich",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:R%C3%BCgen,_Beach_at_Sellin_--_2009_--_1173.jpg"
+    }
   },
   {
     "id": "chair-03",
     "name": "Chair 03",
     "category": "chair",
-    "image": "/images/product-chair-03.png"
+    "image": "/images/product-chair-03.png",
+    "credit": {
+      "title": "Aorus gaming chair on the stage 20230205",
+      "author": "Solomon203",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Aorus_gaming_chair_on_the_stage_20230205.jpg"
+    }
   },
   {
     "id": "chair-04",
     "name": "Chair 04",
     "category": "chair",
-    "image": "/images/product-chair-04.png"
+    "image": "/images/product-chair-04.png",
+    "credit": {
+      "title": "Eames stacking chair for children",
+      "author": "Cullen328",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Eames_stacking_chair_for_children.jpg"
+    }
   },
   {
     "id": "chair-05",
     "name": "Chair 05",
     "category": "chair",
-    "image": "/images/product-chair-05.png"
+    "image": "/images/product-chair-05.png",
+    "credit": {
+      "title": "HK CWB Park Lane basement shop IKEA Chair white n price label Dec-2015 DSC",
+      "author": "Hoilnawoms",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_Chair_white_n_price_label_Dec-2015_DSC.JPG"
+    }
   },
   {
     "id": "chair-06",
     "name": "Chair 06",
     "category": "chair",
-    "image": "/images/product-chair-06.png"
+    "image": "/images/product-chair-06.png",
+    "credit": {
+      "title": "Scott Burton Rock Chair, Baltimore 1",
+      "author": "19h00s",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Scott_Burton_Rock_Chair,_Baltimore_1.jpg"
+    }
   },
   {
     "id": "chair-07",
     "name": "Chair 07",
     "category": "chair",
-    "image": "/images/product-chair-07.png"
+    "image": "/images/product-chair-07.png",
+    "credit": {
+      "title": "Scott Burton Rock Chair, Baltimore 2",
+      "author": "19h00s",
+      "license": "Public domain",
+      "source": "https://commons.wikimedia.org/wiki/File:Scott_Burton_Rock_Chair,_Baltimore_2.jpg"
+    }
   },
   {
     "id": "chair-08",
     "name": "Chair 08",
     "category": "chair",
-    "image": "/images/product-chair-08.png"
+    "image": "/images/product-chair-08.png",
+    "credit": {
+      "title": "HK CWB Park Lane basement shop IKEA chair Red Dec-2015 DSC",
+      "author": "Hoilnawoms",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_chair_Red_Dec-2015_DSC.JPG"
+    }
   },
   {
     "id": "mug-01",
     "name": "Mug 01",
     "category": "mug",
-    "image": "/images/product-mug-01.png"
+    "image": "/images/product-mug-01.png",
+    "credit": {
+      "title": "20140707 Radkersburg - Ceramic cups (Gombosz collection) - H4072",
+      "author": "Hubertl",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H4072.jpg"
+    }
   },
   {
     "id": "mug-02",
     "name": "Mug 02",
     "category": "mug",
-    "image": "/images/product-mug-02.png"
+    "image": "/images/product-mug-02.png",
+    "credit": {
+      "title": "20140707 Radkersburg - Ceramic cups (Gombosz collection) - H4075",
+      "author": "Hubertl",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H4075.jpg"
+    }
   },
   {
     "id": "mug-03",
     "name": "Mug 03",
     "category": "mug",
-    "image": "/images/product-mug-03.png"
+    "image": "/images/product-mug-03.png",
+    "credit": {
+      "title": "20140707 Radkersburg - Ceramic cups (Gombosz collection) - H3923",
+      "author": "Hubertl",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H3923.jpg"
+    }
   },
   {
     "id": "mug-04",
     "name": "Mug 04",
     "category": "mug",
-    "image": "/images/product-mug-04.png"
+    "image": "/images/product-mug-04.png",
+    "credit": {
+      "title": "BLW Mug (1)",
+      "author": "David Jackson",
+      "license": "CC BY-SA 2.0 uk",
+      "source": "https://commons.wikimedia.org/wiki/File:BLW_Mug_(1).jpg"
+    }
   },
   {
     "id": "mug-05",
     "name": "Mug 05",
     "category": "mug",
-    "image": "/images/product-mug-05.png"
+    "image": "/images/product-mug-05.png",
+    "credit": {
+      "title": "White Ceramic Mug With Color Transfer Image of the Palace of Machinery",
+      "author": "Unknown author Unknown author",
+      "license": "Attribution",
+      "source": "https://commons.wikimedia.org/wiki/File:White_Ceramic_Mug_With_Color_Transfer_Image_of_the_Palace_of_Machinery.jpg"
+    }
   },
   {
     "id": "mug-06",
     "name": "Mug 06",
     "category": "mug",
-    "image": "/images/product-mug-06.png"
+    "image": "/images/product-mug-06.png",
+    "credit": {
+      "title": "White Ceramic Mug With Color Transfer Image of the Palace of Electricity",
+      "author": "Unknown author Unknown author",
+      "license": "Attribution",
+      "source": "https://commons.wikimedia.org/wiki/File:White_Ceramic_Mug_With_Color_Transfer_Image_of_the_Palace_of_Electricity.jpg"
+    }
   },
   {
     "id": "mug-07",
     "name": "Mug 07",
     "category": "mug",
-    "image": "/images/product-mug-07.png"
+    "image": "/images/product-mug-07.png",
+    "credit": {
+      "title": "Dirty mug (IKEA VARDAGEN 30cl 8cm after a mocha DSCF2649)",
+      "author": "Trougnouf",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Dirty_mug_(IKEA_VARDAGEN_30cl_8cm_after_a_mocha_DSCF2649).jpg"
+    }
   },
   {
     "id": "mug-08",
     "name": "Mug 08",
     "category": "mug",
-    "image": "/images/product-mug-08.png"
+    "image": "/images/product-mug-08.png",
+    "credit": {
+      "title": "Dirty mug (IKEA VARDAGEN 30cl 8cm after a mocha DSCF2650)",
+      "author": "Trougnouf",
+      "license": "CC BY 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Dirty_mug_(IKEA_VARDAGEN_30cl_8cm_after_a_mocha_DSCF2650).jpg"
+    }
   },
   {
     "id": "watch-01",
     "name": "Watch 01",
     "category": "watch",
-    "image": "/images/product-watch-01.png"
+    "image": "/images/product-watch-01.png",
+    "credit": {
+      "title": "Wristwatch Prologue",
+      "author": "Anton Ehrola",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wristwatch_Prologue.jpg"
+    }
   },
   {
     "id": "watch-02",
     "name": "Watch 02",
     "category": "watch",
-    "image": "/images/product-watch-02.png"
+    "image": "/images/product-watch-02.png",
+    "credit": {
+      "title": "Wristwatch, Hour Angle, Lindbergh, King Collection - DPLA - 48cd2a784bc2d3d4768d0a357ac04d32",
+      "author": "Longines-Wittnauer Watch Co",
+      "license": "CC0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wristwatch,_Hour_Angle,_Lindbergh,_King_Collection_-_DPLA_-_48cd2a784bc2d3d4768d0a357ac04d32.jpg"
+    }
   },
   {
     "id": "watch-03",
     "name": "Watch 03",
     "category": "watch",
-    "image": "/images/product-watch-03.png"
+    "image": "/images/product-watch-03.png",
+    "credit": {
+      "title": "Wristwatch Prologue-2",
+      "author": "Anton Ehrola",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wristwatch_Prologue-2.jpg"
+    }
   },
   {
     "id": "watch-04",
     "name": "Watch 04",
     "category": "watch",
-    "image": "/images/product-watch-04.png"
+    "image": "/images/product-watch-04.png",
+    "credit": {
+      "title": "Vintage Campbell Soup Wristwatch (Boy) (8023312622)",
+      "author": "Joe Haupt from USA",
+      "license": "CC BY 2.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Vintage_Campbell_Soup_Wristwatch_(Boy)_(8023312622).jpg"
+    }
   },
   {
     "id": "watch-05",
     "name": "Watch 05",
     "category": "watch",
-    "image": "/images/product-watch-05.png"
+    "image": "/images/product-watch-05.png",
+    "credit": {
+      "title": "Wristwatches from Tommy Hilfiger in a German shop, 2023",
+      "author": "Pittigrilli",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_from_Tommy_Hilfiger_in_a_German_shop,_2023.jpg"
+    }
   },
   {
     "id": "watch-06",
     "name": "Watch 06",
     "category": "watch",
-    "image": "/images/product-watch-06.png"
+    "image": "/images/product-watch-06.png",
+    "credit": {
+      "title": "Original Rolex Submariner diving wristwatch (l.) and three watches copying its design (Alpha, Invicta and Steeldive)",
+      "author": "derivative work above: Pittigrilli File:The Rolex Submariner Professional.JPG : Dr.K. File:Alpha watches - analog automatic watch, edited without background.jpg : User:Pittigrilli File:Invicta Mens Automatic Pro Diver Watch 8926 (edited, without background).jpg : User: Stefan Bellini File:Steeldive SD8205-7.jpg : Francis Flinch",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Original_Rolex_Submariner_diving_wristwatch_(l.)_and_three_watches_copying_its_design_(Alpha,_Invicta_and_Steeldive).jpg"
+    }
   },
   {
     "id": "watch-07",
     "name": "Watch 07",
     "category": "watch",
-    "image": "/images/product-watch-07.png"
+    "image": "/images/product-watch-07.png",
+    "credit": {
+      "title": "Wristwatches at the Lucardi, Charlois, Rotterdam (2023) 01",
+      "author": "Donald Trung Quoc Don (Chữ Hán: 徵國單) - Wikimedia Commons - © CC BY-SA 4.0 International . ( Want to use this image? ) Original publication 📤: -- Donald Trung 『徵國單』 ( No Fake News 💬 ) ( WikiProject Numismatics 💴) ( Articles 📚 ) 05:47, 2 August 2023 (UTC)",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_at_the_Lucardi,_Charlois,_Rotterdam_(2023)_01.jpg"
+    }
   },
   {
     "id": "watch-08",
     "name": "Watch 08",
     "category": "watch",
-    "image": "/images/product-watch-08.png"
+    "image": "/images/product-watch-08.png",
+    "credit": {
+      "title": "Wristwatches at the Lucardi, Charlois, Rotterdam (2023) 04",
+      "author": "Donald Trung Quoc Don (Chữ Hán: 徵國單) - Wikimedia Commons - © CC BY-SA 4.0 International . ( Want to use this image? ) Original publication 📤: -- Donald Trung 『徵國單』 ( No Fake News 💬 ) ( WikiProject Numismatics 💴) ( Articles 📚 ) 05:47, 2 August 2023 (UTC)",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_at_the_Lucardi,_Charlois,_Rotterdam_(2023)_04.jpg"
+    }
   },
   {
     "id": "lamp-01",
     "name": "Lamp 01",
     "category": "lamp",
-    "image": "/images/product-lamp-01.png"
+    "image": "/images/product-lamp-01.png",
+    "credit": {
+      "title": "IKEA A0401 desk lamp",
+      "author": "Nemo bis",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:IKEA_A0401_desk_lamp.JPG"
+    }
   },
   {
     "id": "lamp-02",
     "name": "Lamp 02",
     "category": "lamp",
-    "image": "/images/product-lamp-02.png"
+    "image": "/images/product-lamp-02.png",
+    "credit": {
+      "title": "A 3M Desk Lamp",
+      "author": "Tbatb",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:A_3M_Desk_Lamp.jpg"
+    }
   },
   {
     "id": "lamp-03",
     "name": "Lamp 03",
     "category": "lamp",
-    "image": "/images/product-lamp-03.png"
+    "image": "/images/product-lamp-03.png",
+    "credit": {
+      "title": "Sharp LS-M118 on the desk 20110506",
+      "author": "Solomon203",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Sharp_LS-M118_on_the_desk_20110506.jpg"
+    }
   },
   {
     "id": "lamp-04",
     "name": "Lamp 04",
     "category": "lamp",
-    "image": "/images/product-lamp-04.png"
+    "image": "/images/product-lamp-04.png",
+    "credit": {
+      "title": "Detail of a 3M Desk Lamp",
+      "author": "Tbatb",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Detail_of_a_3M_Desk_Lamp.jpg"
+    }
   },
   {
     "id": "lamp-05",
     "name": "Lamp 05",
     "category": "lamp",
-    "image": "/images/product-lamp-05.png"
+    "image": "/images/product-lamp-05.png",
+    "credit": {
+      "title": "Christian-dell molitor-office-work-lamp-light",
+      "author": "Christos Vittoratos",
+      "license": "CC BY-SA 3.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Christian-dell_molitor-office-work-lamp-light.jpg"
+    }
   },
   {
     "id": "lamp-06",
     "name": "Lamp 06",
     "category": "lamp",
-    "image": "/images/product-lamp-06.png"
+    "image": "/images/product-lamp-06.png",
+    "credit": {
+      "title": "Dekala Arches™ Smart Lamp",
+      "author": "LannyWay",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:Dekala_Arches%E2%84%A2_Smart_Lamp.jpg"
+    }
   },
   {
     "id": "lamp-07",
     "name": "Lamp 07",
     "category": "lamp",
-    "image": "/images/product-lamp-07.png"
+    "image": "/images/product-lamp-07.png",
+    "credit": {
+      "title": "HK CWB Park Lane basement shop IKEA lighting desk stand 5 lamps Dec-2015 DSC",
+      "author": "Hoilnawoms",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_lighting_desk_stand_5_lamps_Dec-2015_DSC.JPG"
+    }
   },
   {
     "id": "lamp-08",
     "name": "Lamp 08",
     "category": "lamp",
-    "image": "/images/product-lamp-08.png"
+    "image": "/images/product-lamp-08.png",
+    "credit": {
+      "title": "BenQ WiT MindDuo 20201101",
+      "author": "Solomon203",
+      "license": "CC BY-SA 4.0",
+      "source": "https://commons.wikimedia.org/wiki/File:BenQ_WiT_MindDuo_20201101.jpg"
+    }
   }
 ]

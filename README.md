@@ -1,6 +1,6 @@
 # 商品画像の類似検索デモ
 
-Gemini の画像埋め込みと Cloudflare Vectorize を使って、商品画像から似た商品を検索するデモです。商品画像は決定的な SVG から生成した PNG で、`public/images/` と `public/products.json` に含まれています。
+Gemini の画像埋め込みと Cloudflare Vectorize を使って、商品画像から似た商品を検索するデモです。商品画像は Wikimedia Commons から取得した写真で、`public/images/` と `public/products.json` に含まれています。
 
 ## セットアップと実行
 
@@ -10,11 +10,15 @@ Gemini の画像埋め込みと Cloudflare Vectorize を使って、商品画像
 npm install
 ```
 
-画像を生成します。生成済みの PNG と商品一覧を利用する場合は省略できます。
+Commons から実写を取得して画像と商品一覧を再生成します（結果は実行時点の検索結果に依存します）。生成済みの PNG と商品一覧を利用する場合は省略できます。
 
 ```sh
 npm run generate:images
 ```
+
+## 画像の出所と帰属
+
+画像は Wikimedia Commons から取得しています。各画像のライセンス・作者・出典は `public/products.json` の `credit` フィールドを参照してください。
 
 Vectorize のインデックスを作成します。この操作は人間が Cloudflare に対して明示的に実行してください。
 
