@@ -17,22 +17,26 @@
   };
 
   type SearchResult = Omit<Product, "credit"> & {
-    score: number;
+    score?: number;
   };
 
   let products = $state<Product[]>([]);
   let productsById = $derived(new Map(products.map((product) => [product.id, product])));
-  let filterText = $state("");
-  let filteredProducts = $derived(
-    products.filter((product) => {
-      const query = filterText.trim().toLowerCase();
-      return query === ""
-        || product.name.toLowerCase().includes(query)
-        || product.category.toLowerCase().includes(query)
-        || product.credit.title.toLowerCase().includes(query);
-    }),
+  let keywordText = $state("");
+  let keywordQuery = $derived(keywordText.trim().toLowerCase());
+  let keywordResults = $derived<SearchResult[]>(
+    keywordQuery === ""
+      ? []
+      : products.filter((product) =>
+          product.name.toLowerCase().includes(keywordQuery)
+          || product.category.toLowerCase().includes(keywordQuery)
+          || product.credit.title.toLowerCase().includes(keywordQuery),
+        ),
   );
   let results = $state<SearchResult[]>([]);
+  let displayedResults = $derived<SearchResult[]>(
+    keywordQuery === "" ? results : keywordResults,
+  );
   let loadingProducts = $state(true);
   let loadingSearch = $state(false);
   let dragging = $state(false);
@@ -106,6 +110,15 @@
     return file.type === "image/png" || file.type === "image/jpeg";
   }
 
+  function handleKeywordInput(event: Event): void {
+    const input = event.currentTarget as HTMLInputElement;
+    keywordText = input.value;
+    ++searchSeq;
+    results = [];
+    loadingSearch = false;
+    selectedFileName = "";
+  }
+
   async function search(file: File): Promise<void> {
     const currentSearchSeq = ++searchSeq;
 
@@ -118,6 +131,8 @@
 
     loadingSearch = true;
     errorMessage = "";
+    keywordText = "";
+    results = [];
     selectedFileName = file.name;
 
     const formData = new FormData();
@@ -179,6 +194,11 @@
   }
 
   async function searchProduct(product: Product): Promise<void> {
+    const currentSearchSeq = ++searchSeq;
+    keywordText = "";
+    results = [];
+    loadingSearch = false;
+
     try {
       const response = await fetch(product.image);
       if (!response.ok) {
@@ -188,9 +208,15 @@
       const file = new File([blob], `${product.id}.png`, {
         type: blob.type === "image/jpeg" ? "image/jpeg" : "image/png",
       });
+
+      if (currentSearchSeq !== searchSeq) {
+        return;
+      }
       await search(file);
     } catch (error) {
-      errorMessage = error instanceof Error ? error.message : "商品画像を読み込めませんでした。";
+      if (currentSearchSeq === searchSeq) {
+        errorMessage = error instanceof Error ? error.message : "商品画像を読み込めませんでした。";
+      }
     }
   }
 
@@ -235,6 +261,14 @@
       <input id="image-input" type="file" accept="image/png,image/jpeg" onchange={chooseFile} />
     </label>
 
+    <input
+      class="keyword-filter"
+      type="search"
+      placeholder="キーワードで検索（商品名・カテゴリ）"
+      value={keywordText}
+      oninput={handleKeywordInput}
+    />
+
     {#if loadingSearch}
       <p class="status" aria-live="polite">検索中…</p>
     {/if}
@@ -249,14 +283,14 @@
         <p class="eyebrow">02 / RESULTS</p>
         <h2 id="results-title">類似商品</h2>
       </div>
-      {#if results.length > 0}
-        <span class="result-count">{results.length} items</span>
+      {#if displayedResults.length > 0}
+        <span class="result-count">{displayedResults.length} items</span>
       {/if}
     </div>
 
-    {#if results.length > 0}
+    {#if displayedResults.length > 0}
       <div class="result-grid">
-        {#each results as result (result.id)}
+        {#each displayedResults as result (result.id)}
           {@const product = productsById.get(result.id)}
           <article class="result-card">
             <img
@@ -269,7 +303,9 @@
                 <h3>{result.name}</h3>
                 <p>{result.category}</p>
               </div>
-              <span class="score">{result.score.toFixed(3)}</span>
+              {#if result.score !== undefined}
+                <span class="score">{result.score.toFixed(3)}</span>
+              {/if}
             </div>
           </article>
         {/each}
@@ -286,26 +322,15 @@
         <h2 id="catalog-title">登録済み商品</h2>
       </div>
       {#if !loadingProducts}
-        <span class="result-count">
-          {filterText.trim() ? `${filteredProducts.length} / ${products.length} items` : `${filteredProducts.length} items`}
-        </span>
+        <span class="result-count">{products.length} items</span>
       {/if}
     </div>
 
-    <input
-      class="catalog-filter"
-      type="search"
-      placeholder="商品名・カテゴリで絞り込み"
-      bind:value={filterText}
-    />
-
     {#if loadingProducts}
       <p class="status">商品一覧を読み込み中…</p>
-    {:else if filteredProducts.length === 0}
-      <p class="empty-state">該当する商品がありません</p>
     {:else}
       <div class="catalog-grid">
-        {#each filteredProducts as product (product.id)}
+        {#each products as product (product.id)}
           <button class="product-card" type="button" onclick={() => void searchProduct(product)}>
             <img
               src={product.image}
@@ -532,10 +557,10 @@
     margin-top: 72px;
   }
 
-  .catalog-filter {
+  .keyword-filter {
     display: block;
     width: 100%;
-    margin-bottom: 24px;
+    margin-top: 24px;
     padding: 12px 14px;
     border: 1px solid #ded7cd;
     border-radius: 12px;
@@ -543,7 +568,7 @@
     color: inherit;
   }
 
-  .catalog-filter:focus {
+  .keyword-filter:focus {
     border-color: #b45137;
     outline: 2px solid #e9c5b0;
     outline-offset: 2px;
