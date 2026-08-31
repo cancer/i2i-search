@@ -22,6 +22,16 @@
 
   let products = $state<Product[]>([]);
   let productsById = $derived(new Map(products.map((product) => [product.id, product])));
+  let filterText = $state("");
+  let filteredProducts = $derived(
+    products.filter((product) => {
+      const query = filterText.trim().toLowerCase();
+      return query === ""
+        || product.name.toLowerCase().includes(query)
+        || product.category.toLowerCase().includes(query)
+        || product.credit.title.toLowerCase().includes(query);
+    }),
+  );
   let results = $state<SearchResult[]>([]);
   let loadingProducts = $state(true);
   let loadingSearch = $state(false);
@@ -276,15 +286,26 @@
         <h2 id="catalog-title">登録済み商品</h2>
       </div>
       {#if !loadingProducts}
-        <span class="result-count">{products.length} items</span>
+        <span class="result-count">
+          {filterText.trim() ? `${filteredProducts.length} / ${products.length} items` : `${filteredProducts.length} items`}
+        </span>
       {/if}
     </div>
 
+    <input
+      class="catalog-filter"
+      type="search"
+      placeholder="商品名・カテゴリで絞り込み"
+      bind:value={filterText}
+    />
+
     {#if loadingProducts}
       <p class="status">商品一覧を読み込み中…</p>
+    {:else if filteredProducts.length === 0}
+      <p class="empty-state">該当する商品がありません</p>
     {:else}
       <div class="catalog-grid">
-        {#each products as product (product.id)}
+        {#each filteredProducts as product (product.id)}
           <button class="product-card" type="button" onclick={() => void searchProduct(product)}>
             <img
               src={product.image}
@@ -509,6 +530,23 @@
 
   .catalog-section {
     margin-top: 72px;
+  }
+
+  .catalog-filter {
+    display: block;
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 12px 14px;
+    border: 1px solid #ded7cd;
+    border-radius: 12px;
+    background: #fffaf2;
+    color: inherit;
+  }
+
+  .catalog-filter:focus {
+    border-color: #b45137;
+    outline: 2px solid #e9c5b0;
+    outline-offset: 2px;
   }
 
   .catalog-grid {
