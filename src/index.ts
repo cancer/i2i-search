@@ -1,6 +1,13 @@
 import { embedImage } from "./embed.ts";
 
-type WorkerEnv = Env & { GEMINI_API_KEY: string };
+type WorkerEnv = Env & { GEMINI_API_KEY: string; INGEST_TOKEN: string };
+
+interface Product {
+  id: string;
+  name: string;
+  category: string;
+  image: string;
+}
 
 function jsonResponse(body: unknown, status = 200, headers?: HeadersInit): Response {
   return new Response(JSON.stringify(body), {
@@ -16,9 +23,98 @@ function errorResponse(message: string, status: number, headers?: HeadersInit): 
   return jsonResponse({ error: message }, status, headers);
 }
 
+function parseQueryNumber(
+  searchParams: URLSearchParams,
+  name: string,
+  defaultValue: number,
+): number | undefined {
+  const value = searchParams.get(name);
+  if (value === null) {
+    return defaultValue;
+  }
+
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+async function ingest(request: Request, env: WorkerEnv): Promise<Response> {
+  if (!env.INGEST_TOKEN || request.headers.get("x-ingest-token") !== env.INGEST_TOKEN) {
+    return errorResponse("unauthorized", 401);
+  }
+
+  const url = new URL(request.url);
+  const offset = parseQueryNumber(url.searchParams, "offset", 0);
+  const requestedLimit = parseQueryNumber(url.searchParams, "limit", 10);
+  if (offset === undefined || requestedLimit === undefined) {
+    return errorResponse("offset and limit must be numbers", 400);
+  }
+
+  const limit = Math.min(requestedLimit, 10);
+
+  try {
+    const productsResponse = await env.ASSETS.fetch(new URL("/products.json", request.url));
+    if (!productsResponse.ok) {
+      throw new Error("products fetch failed");
+    }
+
+    const products = await productsResponse.json() as Product[];
+    if (!Array.isArray(products)) {
+      throw new Error("products response was not an array");
+    }
+
+    const vectors: Array<{
+      id: string;
+      values: number[];
+      metadata: { name: string; category: string; image: string };
+    }> = [];
+
+    for (const product of products.slice(offset, offset + limit)) {
+      const imageResponse = await env.ASSETS.fetch(new URL(product.image, request.url));
+      if (!imageResponse.ok) {
+        throw new Error("image fetch failed");
+      }
+
+      const values = await embedImage(
+        new Uint8Array(await imageResponse.arrayBuffer()),
+        "image/png",
+        env.GEMINI_API_KEY,
+      );
+      vectors.push({
+        id: product.id,
+        values,
+        metadata: {
+          name: product.name,
+          category: product.category,
+          image: product.image,
+        },
+      });
+    }
+
+    if (vectors.length > 0) {
+      await env.VECTORIZE.upsert(vectors);
+    }
+
+    return jsonResponse({
+      processed: vectors.length,
+      total: products.length,
+      ids: vectors.map((vector) => vector.id),
+    });
+  } catch {
+    return errorResponse("ingest failed", 502);
+  }
+}
+
 export default {
   async fetch(request: Request, env: WorkerEnv): Promise<Response> {
     const pathname = new URL(request.url).pathname;
+
+    if (pathname === "/api/ingest") {
+      if (request.method !== "POST") {
+        return errorResponse("POST is required", 405, { allow: "POST" });
+      }
+
+      return ingest(request, env);
+    }
 
     if (pathname !== "/api/search") {
       return env.ASSETS.fetch(request);

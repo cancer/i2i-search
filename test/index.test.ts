@@ -5,6 +5,13 @@ import worker from "../src/index.ts";
 
 type WorkerEnvironment = Parameters<typeof worker.fetch>[1];
 
+interface IngestProduct {
+  id: string;
+  name: string;
+  category: string;
+  image: string;
+}
+
 function createEnvironment(
   query: (values: number[], options: Record<string, unknown>) => Promise<unknown>,
   assetResponse = new Response("asset"),
@@ -33,6 +40,53 @@ async function callWorker(request: Request, env: WorkerEnvironment): Promise<Res
   return worker.fetch(request, env);
 }
 
+function createIngestEnvironment(products: IngestProduct[]) {
+  const assetPaths: string[] = [];
+  const upsertedVectors: unknown[][] = [];
+  const environment = {
+    GEMINI_API_KEY: "worker-test-secret",
+    INGEST_TOKEN: "ingest-test-token",
+    VECTORIZE: {
+      query: async () => ({ matches: [] }),
+      upsert: async (vectors: unknown[]) => {
+        upsertedVectors.push(vectors);
+      },
+    },
+    ASSETS: {
+      fetch: async (input: RequestInfo | URL) => {
+        const url = new URL(input instanceof Request ? input.url : String(input));
+        assetPaths.push(url.pathname);
+        if (url.pathname === "/products.json") {
+          return new Response(JSON.stringify(products), {
+            headers: { "content-type": "application/json" },
+          });
+        }
+        return new Response(new Uint8Array([1, 2, 3]), {
+          headers: { "content-type": "image/png" },
+        });
+      },
+    },
+  } as unknown as WorkerEnvironment;
+
+  return { environment, assetPaths, upsertedVectors };
+}
+
+async function withGeminiEmbeddingResponse<T>(action: () => Promise<T>): Promise<T> {
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async () => new Response(
+    JSON.stringify({ embedding: { values: Array(768).fill(0.25) } }),
+    {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    },
+  );
+  try {
+    return await action();
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+}
+
 test("GET /api/search returns 405", async () => {
   const response = await callWorker(
     new Request("https://example.test/api/search"),
@@ -51,6 +105,93 @@ test("non-search paths are served by the Assets binding", async () => {
 
   assert.equal(response.status, 200);
   assert.equal(await response.text(), "from assets");
+});
+
+test("POST /api/ingest rejects a mismatched token", async () => {
+  const { environment } = createIngestEnvironment([]);
+  const response = await callWorker(
+    new Request("https://example.test/api/ingest", {
+      method: "POST",
+      headers: { "x-ingest-token": "wrong-token" },
+    }),
+    environment,
+  );
+
+  assert.equal(response.status, 401);
+});
+
+test("POST /api/ingest rejects a missing token", async () => {
+  const { environment } = createIngestEnvironment([]);
+  const response = await callWorker(
+    new Request("https://example.test/api/ingest", { method: "POST" }),
+    environment,
+  );
+
+  assert.equal(response.status, 401);
+});
+
+test("POST /api/ingest embeds and upserts the selected products", async () => {
+  const products: IngestProduct[] = [
+    { id: "bag-01", name: "Bag 01", category: "bag", image: "/images/bag-01.png" },
+    { id: "bag-02", name: "Bag 02", category: "bag", image: "/images/bag-02.png" },
+    { id: "bag-03", name: "Bag 03", category: "bag", image: "/images/bag-03.png" },
+    { id: "bag-04", name: "Bag 04", category: "bag", image: "/images/bag-04.png" },
+  ];
+  const { environment, assetPaths, upsertedVectors } = createIngestEnvironment(products);
+
+  const response = await withGeminiEmbeddingResponse(() => callWorker(
+    new Request("https://example.test/api/ingest?offset=1&limit=2", {
+      method: "POST",
+      headers: { "x-ingest-token": "ingest-test-token" },
+    }),
+    environment,
+  ));
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), {
+    processed: 2,
+    total: 4,
+    ids: ["bag-02", "bag-03"],
+  });
+  assert.deepEqual(assetPaths, [
+    "/products.json",
+    "/images/bag-02.png",
+    "/images/bag-03.png",
+  ]);
+  assert.equal(upsertedVectors.length, 1);
+  assert.deepEqual(upsertedVectors[0], [
+    {
+      id: "bag-02",
+      values: Array(768).fill(0.25),
+      metadata: { name: "Bag 02", category: "bag", image: "/images/bag-02.png" },
+    },
+    {
+      id: "bag-03",
+      values: Array(768).fill(0.25),
+      metadata: { name: "Bag 03", category: "bag", image: "/images/bag-03.png" },
+    },
+  ]);
+});
+
+test("POST /api/ingest returns zero processed when offset reaches the total", async () => {
+  const products: IngestProduct[] = [
+    { id: "bag-01", name: "Bag 01", category: "bag", image: "/images/bag-01.png" },
+    { id: "bag-02", name: "Bag 02", category: "bag", image: "/images/bag-02.png" },
+  ];
+  const { environment, assetPaths, upsertedVectors } = createIngestEnvironment(products);
+
+  const response = await callWorker(
+    new Request("https://example.test/api/ingest?offset=2", {
+      method: "POST",
+      headers: { "x-ingest-token": "ingest-test-token" },
+    }),
+    environment,
+  );
+
+  assert.equal(response.status, 200);
+  assert.deepEqual(await response.json(), { processed: 0, total: 2, ids: [] });
+  assert.deepEqual(assetPaths, ["/products.json"]);
+  assert.deepEqual(upsertedVectors, []);
 });
 
 test("POST /api/search rejects a request without an image", async () => {

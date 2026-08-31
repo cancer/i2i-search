@@ -26,19 +26,7 @@ wrangler vectorize create i2i-search --dimensions=768 --metric=cosine
 
 ```sh
 cp .dev.vars.example .dev.vars
-# .dev.vars の GEMINI_API_KEY を実際のキーに置き換える
-```
-
-商品画像を順番に埋め込み、Vectorize への投入ファイルを作成します。API キーはプロセス環境変数で渡します。
-
-```sh
-GEMINI_API_KEY=... npm run ingest
-```
-
-作成した NDJSON を Vectorize に投入します。この操作も人間が明示的に実行してください。
-
-```sh
-wrangler vectorize insert i2i-search --file data/vectors.ndjson
+# .dev.vars の GEMINI_API_KEY と INGEST_TOKEN を設定する
 ```
 
 本番に近い形でビルドし、Worker と Assets を起動します。
@@ -69,12 +57,18 @@ Vite 開発サーバーの `/api` は `http://localhost:8787` の Wrangler に�
 
 ```sh
 wrangler secret put GEMINI_API_KEY
+wrangler secret put INGEST_TOKEN     # 任意のランダム文字列
 ```
 
-その後、UI をビルドして Worker をデプロイします。
+UI をビルドして Worker をデプロイし、Worker エンドポイントから商品画像を投入します。
 
 ```sh
 npm run deploy
+# 投入（48件を10件ずつ）
+for offset in 0 10 20 30 40; do
+  curl -X POST "https://<worker>/api/ingest?offset=$offset&limit=10" \
+    -H "x-ingest-token: <INGEST_TOKEN の値>"
+done
 ```
 
-`npm run ingest` は Gemini の呼び出しと `data/vectors.ndjson` の生成だけを行い、Vectorize のインデックス作成・削除・投入は行いません。Vectorize の操作とデプロイは、必要なタイミングで人間が明示的に実行してください。API キーをソースコードや設定ファイルへ書き込まないでください。
+ローカル開発（`wrangler dev`）でも `.dev.vars` に `GEMINI_API_KEY` と `INGEST_TOKEN` を書けば同じ手順で投入できます。API キーをソースコードや設定ファイルへ書き込まないでください。
