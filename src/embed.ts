@@ -1,7 +1,7 @@
 export const EMBEDDING_MODEL = "gemini-embedding-2";
 export const EMBEDDING_DIMENSIONS = 768;
 export const EMBEDDING_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent`;
-export const DESCRIPTION_MODEL = "gemini-3.7-flash";
+export const DESCRIPTION_MODEL = "gemini-3.5-flash-lite";
 export const DESCRIPTION_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${DESCRIPTION_MODEL}:generateContent`;
 
 type ImageMimeType = "image/png" | "image/jpeg";
