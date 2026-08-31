@@ -1,3 +1,7 @@
+<script module lang="ts">
+  let searchSeq = 0;
+</script>
+
 <script lang="ts">
   type Product = {
     id: string;
@@ -67,8 +71,12 @@
   }
 
   async function search(file: File): Promise<void> {
+    const currentSearchSeq = ++searchSeq;
+
     if (!isSupportedImage(file)) {
-      errorMessage = "PNGまたはJPEG画像を選択してください。";
+      if (currentSearchSeq === searchSeq) {
+        errorMessage = "PNGまたはJPEG画像を選択してください。";
+      }
       return;
     }
 
@@ -91,12 +99,18 @@
       if (!isSearchResponse(payload)) {
         throw new Error("検索結果の形式が正しくありません。");
       }
-      results = payload.results;
+      if (currentSearchSeq === searchSeq) {
+        results = payload.results;
+      }
     } catch (error) {
-      errorMessage = error instanceof Error ? error.message : "検索に失敗しました。";
-      results = [];
+      if (currentSearchSeq === searchSeq) {
+        errorMessage = error instanceof Error ? error.message : "検索に失敗しました。";
+        results = [];
+      }
     } finally {
-      loadingSearch = false;
+      if (currentSearchSeq === searchSeq) {
+        loadingSearch = false;
+      }
     }
   }
 
@@ -106,6 +120,7 @@
     if (file) {
       void search(file);
     }
+    input.value = "";
   }
 
   function handleDragOver(event: DragEvent): void {

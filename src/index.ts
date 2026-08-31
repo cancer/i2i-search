@@ -44,6 +44,10 @@ export default {
       return errorResponse("image must be a PNG or JPEG file", 400);
     }
 
+    if (image.size > 8 * 1024 * 1024) {
+      return errorResponse("image is too large", 413);
+    }
+
     try {
       const values = await embedImage(
         new Uint8Array(await image.arrayBuffer()),

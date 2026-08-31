@@ -7,7 +7,7 @@
     "generate:images": "node --experimental-strip-types scripts/generate-images.ts",
     "ingest": "node --experimental-strip-types scripts/ingest.ts",
     "test": "node --experimental-strip-types --test test/*.test.ts",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.ui.json --noEmit",
     "dev:ui": "vite",
     "build": "vite build",
     "dev": "wrangler dev",

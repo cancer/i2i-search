@@ -62,22 +62,29 @@ async function readErrorBody(response: Response): Promise<string> {
   return chunks.map((chunk) => decoder.decode(chunk, { stream: true })).join("") + decoder.decode();
 }
 
-function hasEmbeddingValues(
-  payload: unknown,
-): payload is { embeddings: Array<{ values: unknown }> } {
-  if (!payload || typeof payload !== "object" || !("embeddings" in payload)) {
-    return false;
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
+}
+
+function getEmbeddingValues(payload: unknown): unknown {
+  if (!isRecord(payload)) {
+    return undefined;
+  }
+
+  const embedding = payload.embedding;
+  if (isRecord(embedding) && "values" in embedding) {
+    return embedding.values;
   }
 
   const embeddings = payload.embeddings;
   if (!Array.isArray(embeddings) || embeddings.length === 0) {
-    return false;
+    return undefined;
   }
 
   const firstEmbedding = embeddings[0];
-  return typeof firstEmbedding === "object"
-    && firstEmbedding !== null
-    && "values" in firstEmbedding;
+  return isRecord(firstEmbedding) && "values" in firstEmbedding
+    ? firstEmbedding.values
+    : undefined;
 }
 
 export async function embedImage(
@@ -126,11 +133,11 @@ export async function embedImage(
     throw new Error("Gemini embedding response was not valid JSON");
   }
 
-  if (!hasEmbeddingValues(payload) || !Array.isArray(payload.embeddings[0].values)) {
+  const values = getEmbeddingValues(payload);
+  if (!Array.isArray(values)) {
     throw new Error("Gemini embedding response did not contain embedding values");
   }
 
-  const values = payload.embeddings[0].values;
   if (values.length !== EMBEDDING_DIMENSIONS) {
     throw new Error(
       `埋め込みの次元不一致: 期待値 ${EMBEDDING_DIMENSIONS}、実際 ${values.length}`,

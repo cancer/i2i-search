@@ -79,6 +79,28 @@ test("POST /api/search rejects non-image MIME types", async () => {
   assert.ok((await response.json() as { error?: string }).error);
 });
 
+test("POST /api/search rejects images larger than 8 MB", async () => {
+  const form = new FormData();
+  form.append(
+    "image",
+    new File([new Uint8Array(8 * 1024 * 1024 + 1)], "large.png", { type: "image/png" }),
+  );
+
+  const response = await withGeminiResponse(
+    new Response(JSON.stringify({ embedding: { values: Array(768).fill(0.25) } }), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    }),
+    () => callWorker(
+      new Request("https://example.test/api/search", { method: "POST", body: form }),
+      createEnvironment(async () => ({ matches: [] })),
+    ),
+  );
+
+  assert.equal(response.status, 413);
+  assert.deepEqual(await response.json(), { error: "image is too large" });
+});
+
 test("POST /api/search embeds the image and returns selected Vectorize metadata", async () => {
   let queriedValues: number[] | undefined;
   let queriedOptions: Record<string, unknown> | undefined;

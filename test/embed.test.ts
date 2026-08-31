@@ -9,7 +9,7 @@ test("embedImage posts inline image data and returns the embedding", async () =>
   let request: { input: RequestInfo | URL; init?: RequestInit } | undefined;
   const fetchFn: typeof fetch = async (input, init) => {
     request = { input, init };
-    return new Response(JSON.stringify({ embeddings: [{ values: embedding }] }), {
+    return new Response(JSON.stringify({ embedding: { values: embedding } }), {
       status: 200,
       headers: { "content-type": "application/json" },
     });
@@ -46,7 +46,7 @@ test("embedImage accepts JPEG inline data", async () => {
   let body: Record<string, unknown> | undefined;
   const fetchFn: typeof fetch = async (_input, init) => {
     body = JSON.parse(String(init?.body)) as Record<string, unknown>;
-    return new Response(JSON.stringify({ embeddings: [{ values: embedding }] }), { status: 200 });
+    return new Response(JSON.stringify({ embedding: { values: embedding } }), { status: 200 });
   };
 
   await embedImage(new Uint8Array([1, 2, 3]), "image/jpeg", "test-api-key", fetchFn);
@@ -56,6 +56,20 @@ test("embedImage accepts JPEG inline data", async () => {
   };
   assert.equal(content.parts[0].inline_data.mime_type, "image/jpeg");
   assert.equal(content.parts[0].inline_data.data, "AQID");
+});
+
+test("embedImage accepts the legacy batch-shaped response", async () => {
+  const fetchFn: typeof fetch = async () =>
+    new Response(JSON.stringify({ embeddings: [{ values: embedding }] }), { status: 200 });
+
+  const values = await embedImage(
+    new Uint8Array([1, 2, 3]),
+    "image/png",
+    "test-api-key",
+    fetchFn,
+  );
+
+  assert.deepEqual(values, embedding);
 });
 
 test("embedImage rejects an embedding with the wrong dimensionality", async () => {
