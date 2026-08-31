@@ -19,7 +19,7 @@ npm run generate:images
 Vectorize のインデックスを作成します。この操作は人間が Cloudflare に対して明示的に実行してください。
 
 ```sh
-wrangler vectorize create image-search-demo --dimensions=768 --metric=cosine
+wrangler vectorize create i2i-search --dimensions=768 --metric=cosine
 ```
 
 ローカル用の変数ファイルを作成し、Gemini API キーを設定します。
@@ -38,7 +38,7 @@ GEMINI_API_KEY=... npm run ingest
 作成した NDJSON を Vectorize に投入します。この操作も人間が明示的に実行してください。
 
 ```sh
-wrangler vectorize insert image-search-demo --file data/vectors.ndjson
+wrangler vectorize insert i2i-search --file data/vectors.ndjson
 ```
 
 本番に近い形でビルドし、Worker と Assets を起動します。

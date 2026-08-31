@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "image-search-demo",
+  "name": "i2i-search",
   "main": "src/index.ts",
   "compatibility_date": "2026-08-31",
   "assets": {
@@ -11,7 +11,7 @@
   "vectorize": [
     {
       "binding": "VECTORIZE",
-      "index_name": "image-search-demo",
+      "index_name": "i2i-search",
       "remote": true
     }
   ]
