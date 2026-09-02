@@ -141,3 +141,10 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Cloudflare Workers
+.dev.vars
+.wrangler/
+
+# Generated vector export
+data/vectors.ndjson

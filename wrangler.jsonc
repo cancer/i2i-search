@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "i2i-search",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-31",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "vectorize": [
+    {
+      "binding": "VECTORIZE",
+      "index_name": "i2i-search",
+      "remote": true
+    }
+  ]
+}
