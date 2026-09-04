@@ -1,6 +1,6 @@
 # 商品画像の類似検索デモ
 
-Gemini の画像・テキスト埋め込みと Cloudflare Vectorize を使って、商品画像や商品の特徴から似た商品を検索するデモです。商品画像は Wikimedia Commons から取得した写真で、`public/images/` と `public/products.json` に含まれています。
+Gemini の画像・テキスト埋め込みと Cloudflare Vectorize を使って、商品画像や商品の特徴から似た商品を検索するデモです。素人目には区別しにくい機械部品（ベアリング・歯車・ボルト・ナット・ばね・ブッシュ）を題材に、アップロードした 1 枚の写真から似た品番を引き当てる想定です。商品画像は無地背景のカタログ写真を模した自前のレンダリングで、`public/images/` と `public/products.json` に含まれています。
 
 ## セットアップと実行
 
@@ -10,7 +10,7 @@ Gemini の画像・テキスト埋め込みと Cloudflare Vectorize を使って
 npm install
 ```
 
-Commons から実写を取得して画像と商品一覧を再生成します（結果は実行時点の検索結果に依存します）。生成済みの PNG と商品一覧を利用する場合は省略できます。
+商品画像と商品一覧を再生成します（同じ入力からは常に同じ画像が出ます）。生成済みの PNG と商品一覧を利用する場合は省略できます。
 
 ```sh
 npm run generate:images
@@ -18,22 +18,26 @@ npm run generate:images
 
 ## 商品データのメタデータ
 
-`public/products.json` の各商品には、価格（`price`）、サイズ展開（`sizes`）、色（`color`）が含まれます。画像から色を再抽出し、IDから決定的に価格・サイズを再生成する場合は次を実行します。
+`public/products.json` の各商品には、価格（`price`）、サイズ展開（`sizes`）、色（`color`）が含まれます。色は画像生成時の表面処理（`steel` / `zinc` / `black-oxide` / `brass`）から決まります。ID から決定的に価格・サイズを再生成する場合は次を実行します。
 
 ```sh
 npm run enrich:products
 ```
 
-商品説明文は `products.json` には保存せず、投入時に Gemini で商品ページ向けの日本語説明文を生成し、画像と説明文の複合埋め込みとともに Vectorize の metadata へ保存します。
+商品マスタは D1 の `products` テーブルです。`public/products.json` は投入用のシードで、Vectorize にはベクトルと ID しか入りません。検索は Vectorize で ID を引き、D1 から商品情報を取得して返します（`GET /api/products` はカタログ表示用、UI もここから読みます）。
 
-## 画像の出所と帰属
+ベクトルは商品画像と商品テキストの複合埋め込みです。このデモは商品テキストを用意する手間を省くため、投入時に説明文を生成させています。実運用では既存の商品説明をそのまま渡してください。
 
-画像は Wikimedia Commons から取得しています。各画像のライセンス・作者・出典は `public/products.json` の `credit` フィールドを参照してください。
+## 画像の生成方法
 
-Vectorize のインデックスを作成します。この操作は人間が Cloudflare に対して明示的に実行してください。
+画像は外部から取得せず、`scripts/render/` の符号付き距離関数（SDF）レイマーチャで生成しています。部品ごとの寸法バリエーションは `scripts/render/parts.ts` のカタログ定義にあり、カメラ・照明・背景は全点で共通です。生成物は CC0-1.0 で、寸法と表面処理は `public/products.json` の `credit` フィールドに入っています。
+
+Vectorize のインデックスと D1 のデータベースを作成します。この操作は人間が Cloudflare に対して明示的に実行してください。
 
 ```sh
 wrangler vectorize create i2i-search --dimensions=768 --metric=cosine
+wrangler d1 create i2i-search   # 出力された database_id を wrangler.jsonc に設定する
+wrangler d1 execute i2i-search --remote --file schema/products.sql
 ```
 
 ローカル用の変数ファイルを作成し、Gemini API キーを設定します。
