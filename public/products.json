@@ -1,866 +1,626 @@
 [
   {
-    "id": "bag-01",
-    "name": "Bag 01",
-    "category": "bag",
-    "image": "/images/product-bag-01.png",
-    "credit": {
-      "title": "Handbag at Nordstrom Rack - Santa Rosa - December 2022 - Sarah Stierch",
-      "author": "Missvain",
-      "license": "CC BY 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Handbag_at_Nordstrom_Rack_-_Santa_Rosa_-_December_2022_-_Sarah_Stierch.jpg"
-    },
-    "price": 14400,
+    "id": "bearing-01",
+    "name": "Bearing BRG-47A",
+    "category": "bearing",
+    "image": "/images/product-bearing-01.png",
+    "color": "gray",
+    "spec": "外径 47 mm / 内径 20 mm / 幅 14 mm / 鋼球 8 個 / steel",
+    "price": 2400,
     "sizes": [
       "S",
       "M",
       "L"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "bag-02",
-    "name": "Bag 02",
-    "category": "bag",
-    "image": "/images/product-bag-02.png",
-    "credit": {
-      "title": "Stingray skin handbag (48645301521)",
-      "author": "Thomas Quine",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Stingray_skin_handbag_(48645301521).jpg"
-    },
+    "id": "bearing-02",
+    "name": "Bearing BRG-47B",
+    "category": "bearing",
+    "image": "/images/product-bearing-02.png",
+    "color": "white",
+    "spec": "外径 47 mm / 内径 25 mm / 幅 12 mm / 鋼球 9 個 / zinc",
     "price": 15300,
     "sizes": [
       "M",
       "L"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "bag-03",
-    "name": "Bag 03",
-    "category": "bag",
-    "image": "/images/product-bag-03.png",
-    "credit": {
-      "title": "Leather handbag by Les cuirs d'Agathe (DSC07738)",
-      "author": "Trougnouf (Benoit Brummer) , Les cuirs d'Agathe",
-      "license": "CC BY 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Leather_handbag_by_Les_cuirs_d%27Agathe_(DSC07738).jpg"
-    },
-    "price": 16200,
+    "id": "bearing-03",
+    "name": "Bearing BRG-52C",
+    "category": "bearing",
+    "image": "/images/product-bearing-03.png",
+    "color": "black",
+    "spec": "外径 52 mm / 内径 22 mm / 幅 16 mm / 鋼球 9 個 / black-oxide",
+    "price": 8900,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "bag-04",
-    "name": "Bag 04",
-    "category": "bag",
-    "image": "/images/product-bag-04.png",
-    "credit": {
-      "title": "Kangaroo handbag (48566656186)",
-      "author": "Thomas Quine",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Kangaroo_handbag_(48566656186).jpg"
-    },
-    "price": 9900,
+    "id": "bearing-04",
+    "name": "Bearing BRG-52D",
+    "category": "bearing",
+    "image": "/images/product-bearing-04.png",
+    "color": "brown",
+    "spec": "外径 52 mm / 内径 30 mm / 幅 12 mm / 鋼球 11 個 / brass",
+    "price": 2500,
     "sizes": [
       "S"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "bag-05",
-    "name": "Bag 05",
-    "category": "bag",
-    "image": "/images/product-bag-05.png",
-    "credit": {
-      "title": "Crocodile skin handbag (48650078886)",
-      "author": "Thomas Quine",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Crocodile_skin_handbag_(48650078886).jpg"
-    },
-    "price": 10800,
-    "sizes": [
-      "S",
-      "M",
-      "L"
-    ],
-    "color": "black"
-  },
-  {
-    "id": "bag-06",
-    "name": "Bag 06",
-    "category": "bag",
-    "image": "/images/product-bag-06.png",
-    "credit": {
-      "title": "A handbag^ - geograph.org.uk - 5695438",
-      "author": "Richard Webb",
-      "license": "CC BY-SA 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:A_handbag%5E_-_geograph.org.uk_-_5695438.jpg"
-    },
-    "price": 11700,
-    "sizes": [
-      "M",
-      "L"
-    ],
-    "color": "white"
-  },
-  {
-    "id": "bag-07",
-    "name": "Bag 07",
-    "category": "bag",
-    "image": "/images/product-bag-07.png",
-    "credit": {
-      "title": "Flora Cheng's handbag and business card box 20220716",
-      "author": "Solomon203",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Flora_Cheng%27s_handbag_and_business_card_box_20220716.jpg"
-    },
-    "price": 12600,
-    "sizes": [
-      "S",
-      "M"
-    ],
-    "color": "white"
-  },
-  {
-    "id": "bag-08",
-    "name": "Bag 08",
-    "category": "bag",
-    "image": "/images/product-bag-08.png",
-    "credit": {
-      "title": "Portrait, woman, handbag Fortepan 11924",
-      "author": "FOTO:Fortepan — ID 11924 : Adományozó/Donor: Privát Fotó és Film Archívum-Höfler Tibor gyűjtemény.",
-      "license": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Portrait,_woman,_handbag_Fortepan_11924.jpg"
-    },
-    "price": 6300,
-    "sizes": [
-      "S"
-    ],
-    "color": "white"
-  },
-  {
-    "id": "shoes-01",
-    "name": "Shoes 01",
-    "category": "shoes",
-    "image": "/images/product-shoes-01.png",
-    "credit": {
-      "title": "Superga Leahorseu Sneaker 2750 Poni blau (1)",
-      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Superga_Leahorseu_Sneaker_2750_Poni_blau_(1).jpg"
-    },
-    "price": 6400,
-    "sizes": [
-      "S",
-      "M"
-    ],
-    "color": "white"
-  },
-  {
-    "id": "shoes-02",
-    "name": "Shoes 02",
-    "category": "shoes",
-    "image": "/images/product-shoes-02.png",
-    "credit": {
-      "title": "Superga Macramew Sneaker 2750 Spitze rosa (1)",
-      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Superga_Macramew_Sneaker_2750_Spitze_rosa_(1).jpg"
-    },
+    "id": "bearing-05",
+    "name": "Bearing BRG-42E",
+    "category": "bearing",
+    "image": "/images/product-bearing-05.png",
+    "color": "gray",
+    "spec": "外径 42 mm / 内径 17 mm / 幅 15 mm / 鋼球 8 個 / steel",
     "price": 15400,
     "sizes": [
-      "S"
-    ],
-    "color": "white"
-  },
-  {
-    "id": "shoes-03",
-    "name": "Shoes 03",
-    "category": "shoes",
-    "image": "/images/product-shoes-03.png",
-    "credit": {
-      "title": "Superga 2750 Microfiber Sneaker Lederoptik weiß (3)",
-      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Superga_2750_Microfiber_Sneaker_Lederoptik_wei%C3%9F_(3).jpg"
-    },
-    "price": 12400,
-    "sizes": [
       "S",
       "M",
       "L"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "shoes-04",
-    "name": "Shoes 04",
-    "category": "shoes",
-    "image": "/images/product-shoes-04.png",
-    "credit": {
-      "title": "Superga 2750 Microfiber Sneaker Lederoptik schwarz (1)",
-      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Superga_2750_Microfiber_Sneaker_Lederoptik_schwarz_(1).jpg"
-    },
-    "price": 5300,
+    "id": "bearing-06",
+    "name": "Bearing BRG-55F",
+    "category": "bearing",
+    "image": "/images/product-bearing-06.png",
+    "color": "white",
+    "spec": "外径 55 mm / 内径 28 mm / 幅 14 mm / 鋼球 10 個 / zinc",
+    "price": 9000,
     "sizes": [
       "M",
       "L"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "shoes-05",
-    "name": "Shoes 05",
-    "category": "shoes",
-    "image": "/images/product-shoes-05.png",
-    "credit": {
-      "title": "Superga Cotu Classic Sneaker 2750 Canvas weiß (1)",
-      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_wei%C3%9F_(1).jpg"
-    },
-    "price": 18400,
+    "id": "bearing-07",
+    "name": "Bearing BRG-44G",
+    "category": "bearing",
+    "image": "/images/product-bearing-07.png",
+    "color": "black",
+    "spec": "外径 44 mm / 内径 24 mm / 幅 10 mm / 鋼球 10 個 / black-oxide",
+    "price": 2600,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "shoes-06",
-    "name": "Shoes 06",
-    "category": "shoes",
-    "image": "/images/product-shoes-06.png",
-    "credit": {
-      "title": "Michael Kors Kristy Lace Up Sneaker 43S4KRFS2E Kalbsleder braun (1) (16286299927)",
-      "author": "SPERA.de Designerschuhe, Taschen und Accessoires from Deutschland",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Michael_Kors_Kristy_Lace_Up_Sneaker_43S4KRFS2E_Kalbsleder_braun_(1)_(16286299927).jpg"
-    },
+    "id": "bearing-08",
+    "name": "Bearing BRG-50H",
+    "category": "bearing",
+    "image": "/images/product-bearing-08.png",
+    "color": "brown",
+    "spec": "外径 50 mm / 内径 21 mm / 幅 18 mm / 鋼球 9 個 / brass",
+    "price": 2100,
+    "sizes": [
+      "S"
+    ]
+  },
+  {
+    "id": "gear-01",
+    "name": "Gear GEA-48A",
+    "category": "gear",
+    "image": "/images/product-gear-01.png",
+    "color": "gray",
+    "spec": "外径 48 mm / 軸穴 12 mm / 歯幅 9 mm / 歯数 18 / steel",
+    "price": 37100,
+    "sizes": [
+      "M",
+      "L"
+    ]
+  },
+  {
+    "id": "gear-02",
+    "name": "Gear GEA-50B",
+    "category": "gear",
+    "image": "/images/product-gear-02.png",
+    "color": "white",
+    "spec": "外径 50 mm / 軸穴 13 mm / 歯幅 8 mm / 歯数 24 / zinc",
+    "price": 24200,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ]
+  },
+  {
+    "id": "gear-03",
+    "name": "Gear GEA-52C",
+    "category": "gear",
+    "image": "/images/product-gear-03.png",
+    "color": "black",
+    "spec": "外径 52 mm / 軸穴 11 mm / 歯幅 11 mm / 歯数 30 / black-oxide",
     "price": 11300,
     "sizes": [
       "S"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "shoes-07",
-    "name": "Shoes 07",
-    "category": "shoes",
-    "image": "/images/product-shoes-07.png",
-    "credit": {
-      "title": "Superga Cotu Classic Sneaker 2750 Canvas blau (3)",
-      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_blau_(3).jpg"
-    },
-    "price": 8300,
-    "sizes": [
-      "S",
-      "M",
-      "L"
-    ],
-    "color": "white"
-  },
-  {
-    "id": "shoes-08",
-    "name": "Shoes 08",
-    "category": "shoes",
-    "image": "/images/product-shoes-08.png",
-    "credit": {
-      "title": "Superga Cotu Classic Sneaker 2750 Canvas blau (2)",
-      "author": "SPERA.de Designerschuhe, Taschen und Accessoires",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Superga_Cotu_Classic_Sneaker_2750_Canvas_blau_(2).jpg"
-    },
-    "price": 17300,
-    "sizes": [
-      "M",
-      "L"
-    ],
-    "color": "white"
-  },
-  {
-    "id": "chair-01",
-    "name": "Chair 01",
-    "category": "chair",
-    "image": "/images/product-chair-01.png",
-    "credit": {
-      "title": "Santorin (GR), Fira -- 2017 -- 2598",
-      "author": "Dietmar Rabich",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Santorin_(GR),_Fira_--_2017_--_2598.jpg"
-    },
-    "price": 48600,
-    "sizes": [
-      "M",
-      "L"
-    ],
-    "color": "green"
-  },
-  {
-    "id": "chair-02",
-    "name": "Chair 02",
-    "category": "chair",
-    "image": "/images/product-chair-02.png",
-    "credit": {
-      "title": "Rügen, Beach at Sellin -- 2009 -- 1173",
-      "author": "Dietmar Rabich",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:R%C3%BCgen,_Beach_at_Sellin_--_2009_--_1173.jpg"
-    },
-    "price": 10900,
-    "sizes": [
-      "S",
-      "M",
-      "L"
-    ],
-    "color": "gray"
-  },
-  {
-    "id": "chair-03",
-    "name": "Chair 03",
-    "category": "chair",
-    "image": "/images/product-chair-03.png",
-    "credit": {
-      "title": "Aorus gaming chair on the stage 20230205",
-      "author": "Solomon203",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Aorus_gaming_chair_on_the_stage_20230205.jpg"
-    },
-    "price": 25300,
-    "sizes": [
-      "S"
-    ],
-    "color": "gray"
-  },
-  {
-    "id": "chair-04",
-    "name": "Chair 04",
-    "category": "chair",
-    "image": "/images/product-chair-04.png",
-    "credit": {
-      "title": "Eames stacking chair for children",
-      "author": "Cullen328",
-      "license": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Eames_stacking_chair_for_children.jpg"
-    },
-    "price": 39700,
+    "id": "gear-04",
+    "name": "Gear GEA-46D",
+    "category": "gear",
+    "image": "/images/product-gear-04.png",
+    "color": "brown",
+    "spec": "外径 46 mm / 軸穴 14 mm / 歯幅 10 mm / 歯数 16 / brass",
+    "price": 24400,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "beige"
+    ]
   },
   {
-    "id": "chair-05",
-    "name": "Chair 05",
-    "category": "chair",
-    "image": "/images/product-chair-05.png",
-    "credit": {
-      "title": "HK CWB Park Lane basement shop IKEA Chair white n price label Dec-2015 DSC",
-      "author": "Hoilnawoms",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_Chair_white_n_price_label_Dec-2015_DSC.JPG"
-    },
-    "price": 54100,
+    "id": "gear-05",
+    "name": "Gear GEA-49E",
+    "category": "gear",
+    "image": "/images/product-gear-05.png",
+    "color": "gray",
+    "spec": "外径 49 mm / 軸穴 10 mm / 歯幅 12 mm / 歯数 20 / steel",
+    "price": 11500,
     "sizes": [
       "M",
       "L"
-    ],
-    "color": "gray"
+    ]
   },
   {
-    "id": "chair-06",
-    "name": "Chair 06",
-    "category": "chair",
-    "image": "/images/product-chair-06.png",
-    "credit": {
-      "title": "Scott Burton Rock Chair, Baltimore 1",
-      "author": "19h00s",
-      "license": "Public domain",
-      "source": "https://commons.wikimedia.org/wiki/File:Scott_Burton_Rock_Chair,_Baltimore_1.jpg"
-    },
-    "price": 16400,
+    "id": "gear-06",
+    "name": "Gear GEA-52F",
+    "category": "gear",
+    "image": "/images/product-gear-06.png",
+    "color": "white",
+    "spec": "外径 52 mm / 軸穴 15 mm / 歯幅 7 mm / 歯数 36 / zinc",
+    "price": 37200,
     "sizes": [
       "S",
       "M",
       "L"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "chair-07",
-    "name": "Chair 07",
-    "category": "chair",
-    "image": "/images/product-chair-07.png",
-    "credit": {
-      "title": "Scott Burton Rock Chair, Baltimore 2",
-      "author": "19h00s",
-      "license": "Public domain",
-      "source": "https://commons.wikimedia.org/wiki/File:Scott_Burton_Rock_Chair,_Baltimore_2.jpg"
-    },
-    "price": 30800,
+    "id": "gear-07",
+    "name": "Gear GEA-45G",
+    "category": "gear",
+    "image": "/images/product-gear-07.png",
+    "color": "black",
+    "spec": "外径 45 mm / 軸穴 12 mm / 歯幅 13 mm / 歯数 14 / black-oxide",
+    "price": 24300,
     "sizes": [
       "S"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "chair-08",
-    "name": "Chair 08",
-    "category": "chair",
-    "image": "/images/product-chair-08.png",
-    "credit": {
-      "title": "HK CWB Park Lane basement shop IKEA chair Red Dec-2015 DSC",
-      "author": "Hoilnawoms",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_chair_Red_Dec-2015_DSC.JPG"
-    },
-    "price": 45200,
+    "id": "gear-08",
+    "name": "Gear GEA-50H",
+    "category": "gear",
+    "image": "/images/product-gear-08.png",
+    "color": "brown",
+    "spec": "外径 50 mm / 軸穴 13 mm / 歯幅 10 mm / 歯数 27 / brass",
+    "price": 24000,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "brown"
+    ]
   },
   {
-    "id": "mug-01",
-    "name": "Mug 01",
-    "category": "mug",
-    "image": "/images/product-mug-01.png",
-    "credit": {
-      "title": "20140707 Radkersburg - Ceramic cups (Gombosz collection) - H4072",
-      "author": "Hubertl",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H4072.jpg"
-    },
-    "price": 3400,
+    "id": "bolt-01",
+    "name": "Bolt BLT-16A",
+    "category": "bolt",
+    "image": "/images/product-bolt-01.png",
+    "color": "gray",
+    "spec": "二面幅 16 mm / ねじ径 M8 / 長さ 45 mm / steel",
+    "price": 1300,
     "sizes": [
-      "S"
-    ],
-    "color": "beige"
+      "M",
+      "L"
+    ]
   },
   {
-    "id": "mug-02",
-    "name": "Mug 02",
-    "category": "mug",
-    "image": "/images/product-mug-02.png",
-    "credit": {
-      "title": "20140707 Radkersburg - Ceramic cups (Gombosz collection) - H4075",
-      "author": "Hubertl",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H4075.jpg"
-    },
-    "price": 3700,
-    "sizes": [
-      "S",
-      "M"
-    ],
-    "color": "gray"
-  },
-  {
-    "id": "mug-03",
-    "name": "Mug 03",
-    "category": "mug",
-    "image": "/images/product-mug-03.png",
-    "credit": {
-      "title": "20140707 Radkersburg - Ceramic cups (Gombosz collection) - H3923",
-      "author": "Hubertl",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:20140707_Radkersburg_-_Ceramic_cups_(Gombosz_collection)_-_H3923.jpg"
-    },
+    "id": "bolt-02",
+    "name": "Bolt BLT-18B",
+    "category": "bolt",
+    "image": "/images/product-bolt-02.png",
+    "color": "white",
+    "spec": "二面幅 18 mm / ねじ径 M10 / 長さ 50 mm / zinc",
     "price": 1400,
     "sizes": [
-      "M",
-      "L"
-    ],
-    "color": "gray"
-  },
-  {
-    "id": "mug-04",
-    "name": "Mug 04",
-    "category": "mug",
-    "image": "/images/product-mug-04.png",
-    "credit": {
-      "title": "BLW Mug (1)",
-      "author": "David Jackson",
-      "license": "CC BY-SA 2.0 uk",
-      "source": "https://commons.wikimedia.org/wiki/File:BLW_Mug_(1).jpg"
-    },
-    "price": 3100,
-    "sizes": [
       "S",
       "M",
       "L"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "mug-05",
-    "name": "Mug 05",
-    "category": "mug",
-    "image": "/images/product-mug-05.png",
-    "credit": {
-      "title": "White Ceramic Mug With Color Transfer Image of the Palace of Machinery",
-      "author": "Unknown author Unknown author",
-      "license": "Attribution",
-      "source": "https://commons.wikimedia.org/wiki/File:White_Ceramic_Mug_With_Color_Transfer_Image_of_the_Palace_of_Machinery.jpg"
-    },
-    "price": 800,
+    "id": "bolt-03",
+    "name": "Bolt BLT-14C",
+    "category": "bolt",
+    "image": "/images/product-bolt-03.png",
+    "color": "black",
+    "spec": "二面幅 14 mm / ねじ径 M7 / 長さ 40 mm / black-oxide",
+    "price": 1500,
     "sizes": [
       "S"
-    ],
-    "color": "brown"
+    ]
   },
   {
-    "id": "mug-06",
-    "name": "Mug 06",
-    "category": "mug",
-    "image": "/images/product-mug-06.png",
-    "credit": {
-      "title": "White Ceramic Mug With Color Transfer Image of the Palace of Electricity",
-      "author": "Unknown author Unknown author",
-      "license": "Attribution",
-      "source": "https://commons.wikimedia.org/wiki/File:White_Ceramic_Mug_With_Color_Transfer_Image_of_the_Palace_of_Electricity.jpg"
-    },
-    "price": 1100,
+    "id": "bolt-04",
+    "name": "Bolt BLT-21D",
+    "category": "bolt",
+    "image": "/images/product-bolt-04.png",
+    "color": "brown",
+    "spec": "二面幅 21 mm / ねじ径 M12 / 長さ 55 mm / brass",
+    "price": 800,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "brown"
+    ]
   },
   {
-    "id": "mug-07",
-    "name": "Mug 07",
-    "category": "mug",
-    "image": "/images/product-mug-07.png",
-    "credit": {
-      "title": "Dirty mug (IKEA VARDAGEN 30cl 8cm after a mocha DSCF2649)",
-      "author": "Trougnouf",
-      "license": "CC BY 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Dirty_mug_(IKEA_VARDAGEN_30cl_8cm_after_a_mocha_DSCF2649).jpg"
-    },
-    "price": 2100,
+    "id": "bolt-05",
+    "name": "Bolt BLT-16E",
+    "category": "bolt",
+    "image": "/images/product-bolt-05.png",
+    "color": "gray",
+    "spec": "二面幅 16 mm / ねじ径 M8 / 長さ 35 mm / steel",
+    "price": 900,
     "sizes": [
       "M",
       "L"
-    ],
-    "color": "brown"
+    ]
   },
   {
-    "id": "mug-08",
-    "name": "Mug 08",
-    "category": "mug",
-    "image": "/images/product-mug-08.png",
-    "credit": {
-      "title": "Dirty mug (IKEA VARDAGEN 30cl 8cm after a mocha DSCF2650)",
-      "author": "Trougnouf",
-      "license": "CC BY 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Dirty_mug_(IKEA_VARDAGEN_30cl_8cm_after_a_mocha_DSCF2650).jpg"
-    },
+    "id": "bolt-06",
+    "name": "Bolt BLT-18F",
+    "category": "bolt",
+    "image": "/images/product-bolt-06.png",
+    "color": "white",
+    "spec": "二面幅 18 mm / ねじ径 M10 / 長さ 45 mm / zinc",
     "price": 1000,
     "sizes": [
       "S",
       "M",
       "L"
-    ],
-    "color": "brown"
+    ]
   },
   {
-    "id": "watch-01",
-    "name": "Watch 01",
-    "category": "watch",
-    "image": "/images/product-watch-01.png",
-    "credit": {
-      "title": "Wristwatch Prologue",
-      "author": "Anton Ehrola",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Wristwatch_Prologue.jpg"
-    },
-    "price": 8700,
+    "id": "bolt-07",
+    "name": "Bolt BLT-24G",
+    "category": "bolt",
+    "image": "/images/product-bolt-07.png",
+    "color": "black",
+    "spec": "二面幅 24 mm / ねじ径 M14 / 長さ 60 mm / black-oxide",
+    "price": 1100,
     "sizes": [
       "S"
-    ],
-    "color": "beige"
+    ]
   },
   {
-    "id": "watch-02",
-    "name": "Watch 02",
-    "category": "watch",
-    "image": "/images/product-watch-02.png",
-    "credit": {
-      "title": "Wristwatch, Hour Angle, Lindbergh, King Collection - DPLA - 48cd2a784bc2d3d4768d0a357ac04d32",
-      "author": "Longines-Wittnauer Watch Co",
-      "license": "CC0",
-      "source": "https://commons.wikimedia.org/wiki/File:Wristwatch,_Hour_Angle,_Lindbergh,_King_Collection_-_DPLA_-_48cd2a784bc2d3d4768d0a357ac04d32.jpg"
-    },
-    "price": 17300,
+    "id": "bolt-08",
+    "name": "Bolt BLT-14H",
+    "category": "bolt",
+    "image": "/images/product-bolt-08.png",
+    "color": "brown",
+    "spec": "二面幅 14 mm / ねじ径 M7 / 長さ 50 mm / brass",
+    "price": 400,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "watch-03",
-    "name": "Watch 03",
-    "category": "watch",
-    "image": "/images/product-watch-03.png",
-    "credit": {
-      "title": "Wristwatch Prologue-2",
-      "author": "Anton Ehrola",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Wristwatch_Prologue-2.jpg"
-    },
-    "price": 64500,
-    "sizes": [
-      "M",
-      "L"
-    ],
-    "color": "beige"
-  },
-  {
-    "id": "watch-04",
-    "name": "Watch 04",
-    "category": "watch",
-    "image": "/images/product-watch-04.png",
-    "credit": {
-      "title": "Vintage Campbell Soup Wristwatch (Boy) (8023312622)",
-      "author": "Joe Haupt from USA",
-      "license": "CC BY 2.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Vintage_Campbell_Soup_Wristwatch_(Boy)_(8023312622).jpg"
-    },
-    "price": 75200,
-    "sizes": [
-      "S",
-      "M",
-      "L"
-    ],
-    "color": "white"
-  },
-  {
-    "id": "watch-05",
-    "name": "Watch 05",
-    "category": "watch",
-    "image": "/images/product-watch-05.png",
-    "credit": {
-      "title": "Wristwatches from Tommy Hilfiger in a German shop, 2023",
-      "author": "Pittigrilli",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_from_Tommy_Hilfiger_in_a_German_shop,_2023.jpg"
-    },
-    "price": 47300,
+    "id": "nut-01",
+    "name": "Nut NUT-16A",
+    "category": "nut",
+    "image": "/images/product-nut-01.png",
+    "color": "gray",
+    "spec": "二面幅 16 mm / ねじ径 M8 / 高さ 6.5 mm / steel",
+    "price": 900,
     "sizes": [
       "S"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "watch-06",
-    "name": "Watch 06",
-    "category": "watch",
-    "image": "/images/product-watch-06.png",
-    "credit": {
-      "title": "Original Rolex Submariner diving wristwatch (l.) and three watches copying its design (Alpha, Invicta and Steeldive)",
-      "author": "derivative work above: Pittigrilli File:The Rolex Submariner Professional.JPG : Dr.K. File:Alpha watches - analog automatic watch, edited without background.jpg : User:Pittigrilli File:Invicta Mens Automatic Pro Diver Watch 8926 (edited, without background).jpg : User: Stefan Bellini File:Steeldive SD8205-7.jpg : Francis Flinch",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Original_Rolex_Submariner_diving_wristwatch_(l.)_and_three_watches_copying_its_design_(Alpha,_Invicta_and_Steeldive).jpg"
-    },
-    "price": 55900,
+    "id": "nut-02",
+    "name": "Nut NUT-18B",
+    "category": "nut",
+    "image": "/images/product-nut-02.png",
+    "color": "white",
+    "spec": "二面幅 18 mm / ねじ径 M10 / 高さ 8 mm / zinc",
+    "price": 600,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "watch-07",
-    "name": "Watch 07",
-    "category": "watch",
-    "image": "/images/product-watch-07.png",
-    "credit": {
-      "title": "Wristwatches at the Lucardi, Charlois, Rotterdam (2023) 01",
-      "author": "Donald Trung Quoc Don (Chữ Hán: 徵國單) - Wikimedia Commons - © CC BY-SA 4.0 International . ( Want to use this image? ) Original publication 📤: -- Donald Trung 『徵國單』 ( No Fake News 💬 ) ( WikiProject Numismatics 💴) ( Articles 📚 ) 05:47, 2 August 2023 (UTC)",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_at_the_Lucardi,_Charlois,_Rotterdam_(2023)_01.jpg"
-    },
-    "price": 28000,
+    "id": "nut-03",
+    "name": "Nut NUT-14C",
+    "category": "nut",
+    "image": "/images/product-nut-03.png",
+    "color": "black",
+    "spec": "二面幅 14 mm / ねじ径 M7 / 高さ 5.5 mm / black-oxide",
+    "price": 700,
     "sizes": [
       "M",
       "L"
-    ],
-    "color": "gray"
+    ]
   },
   {
-    "id": "watch-08",
-    "name": "Watch 08",
-    "category": "watch",
-    "image": "/images/product-watch-08.png",
-    "credit": {
-      "title": "Wristwatches at the Lucardi, Charlois, Rotterdam (2023) 04",
-      "author": "Donald Trung Quoc Don (Chữ Hán: 徵國單) - Wikimedia Commons - © CC BY-SA 4.0 International . ( Want to use this image? ) Original publication 📤: -- Donald Trung 『徵國單』 ( No Fake News 💬 ) ( WikiProject Numismatics 💴) ( Articles 📚 ) 05:47, 2 August 2023 (UTC)",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Wristwatches_at_the_Lucardi,_Charlois,_Rotterdam_(2023)_04.jpg"
-    },
-    "price": 38700,
+    "id": "nut-04",
+    "name": "Nut NUT-21D",
+    "category": "nut",
+    "image": "/images/product-nut-04.png",
+    "color": "brown",
+    "spec": "二面幅 21 mm / ねじ径 M12 / 高さ 10 mm / brass",
+    "price": 1200,
     "sizes": [
       "S",
       "M",
       "L"
-    ],
-    "color": "gray"
+    ]
   },
   {
-    "id": "lamp-01",
-    "name": "Lamp 01",
-    "category": "lamp",
-    "image": "/images/product-lamp-01.png",
-    "credit": {
-      "title": "IKEA A0401 desk lamp",
-      "author": "Nemo bis",
-      "license": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:IKEA_A0401_desk_lamp.JPG"
-    },
-    "price": 17600,
+    "id": "nut-05",
+    "name": "Nut NUT-16E",
+    "category": "nut",
+    "image": "/images/product-nut-05.png",
+    "color": "gray",
+    "spec": "二面幅 16 mm / ねじ径 M8 / 高さ 10 mm / steel",
+    "price": 1300,
+    "sizes": [
+      "S"
+    ]
+  },
+  {
+    "id": "nut-06",
+    "name": "Nut NUT-18F",
+    "category": "nut",
+    "image": "/images/product-nut-06.png",
+    "color": "white",
+    "spec": "二面幅 18 mm / ねじ径 M10 / 高さ 5 mm / zinc",
+    "price": 1000,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "black"
+    ]
   },
   {
-    "id": "lamp-02",
-    "name": "Lamp 02",
-    "category": "lamp",
-    "image": "/images/product-lamp-02.png",
-    "credit": {
-      "title": "A 3M Desk Lamp",
-      "author": "Tbatb",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:A_3M_Desk_Lamp.jpg"
-    },
-    "price": 14000,
+    "id": "nut-07",
+    "name": "Nut NUT-24G",
+    "category": "nut",
+    "image": "/images/product-nut-07.png",
+    "color": "black",
+    "spec": "二面幅 24 mm / ねじ径 M14 / 高さ 11 mm / black-oxide",
+    "price": 1100,
     "sizes": [
-      "S"
-    ],
-    "color": "gray"
+      "M",
+      "L"
+    ]
   },
   {
-    "id": "lamp-03",
-    "name": "Lamp 03",
-    "category": "lamp",
-    "image": "/images/product-lamp-03.png",
-    "credit": {
-      "title": "Sharp LS-M118 on the desk 20110506",
-      "author": "Solomon203",
-      "license": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Sharp_LS-M118_on_the_desk_20110506.jpg"
-    },
-    "price": 22900,
+    "id": "nut-08",
+    "name": "Nut NUT-14H",
+    "category": "nut",
+    "image": "/images/product-nut-08.png",
+    "color": "brown",
+    "spec": "二面幅 14 mm / ねじ径 M7 / 高さ 8 mm / brass",
+    "price": 100,
     "sizes": [
       "S",
       "M",
       "L"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "lamp-04",
-    "name": "Lamp 04",
-    "category": "lamp",
-    "image": "/images/product-lamp-04.png",
-    "credit": {
-      "title": "Detail of a 3M Desk Lamp",
-      "author": "Tbatb",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Detail_of_a_3M_Desk_Lamp.jpg"
-    },
-    "price": 19300,
+    "id": "spring-01",
+    "name": "Spring SPR-22A",
+    "category": "spring",
+    "image": "/images/product-spring-01.png",
+    "color": "gray",
+    "spec": "コイル外径 22 mm / 線径 3.5 mm / 自由長 38 mm / steel",
+    "price": 900,
     "sizes": [
-      "M",
-      "L"
-    ],
-    "color": "white"
+      "S"
+    ]
   },
   {
-    "id": "lamp-05",
-    "name": "Lamp 05",
-    "category": "lamp",
-    "image": "/images/product-lamp-05.png",
-    "credit": {
-      "title": "Christian-dell molitor-office-work-lamp-light",
-      "author": "Christos Vittoratos",
-      "license": "CC BY-SA 3.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Christian-dell_molitor-office-work-lamp-light.jpg"
-    },
-    "price": 5100,
+    "id": "spring-02",
+    "name": "Spring SPR-25B",
+    "category": "spring",
+    "image": "/images/product-spring-02.png",
+    "color": "white",
+    "spec": "コイル外径 25 mm / 線径 4 mm / 自由長 40 mm / zinc",
+    "price": 1700,
     "sizes": [
       "S",
       "M"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "lamp-06",
-    "name": "Lamp 06",
-    "category": "lamp",
-    "image": "/images/product-lamp-06.png",
-    "credit": {
-      "title": "Dekala Arches™ Smart Lamp",
-      "author": "LannyWay",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:Dekala_Arches%E2%84%A2_Smart_Lamp.jpg"
-    },
-    "price": 24600,
+    "id": "spring-03",
+    "name": "Spring SPR-19C",
+    "category": "spring",
+    "image": "/images/product-spring-03.png",
+    "color": "black",
+    "spec": "コイル外径 19 mm / 線径 3 mm / 自由長 34 mm / black-oxide",
+    "price": 4700,
     "sizes": [
-      "S"
-    ],
-    "color": "brown"
+      "M",
+      "L"
+    ]
   },
   {
-    "id": "lamp-07",
-    "name": "Lamp 07",
-    "category": "lamp",
-    "image": "/images/product-lamp-07.png",
-    "credit": {
-      "title": "HK CWB Park Lane basement shop IKEA lighting desk stand 5 lamps Dec-2015 DSC",
-      "author": "Hoilnawoms",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:HK_CWB_Park_Lane_basement_shop_IKEA_lighting_desk_stand_5_lamps_Dec-2015_DSC.JPG"
-    },
-    "price": 10400,
+    "id": "spring-04",
+    "name": "Spring SPR-22D",
+    "category": "spring",
+    "image": "/images/product-spring-04.png",
+    "color": "brown",
+    "spec": "コイル外径 22 mm / 線径 3.5 mm / 自由長 32 mm / brass",
+    "price": 600,
     "sizes": [
       "S",
       "M",
       "L"
-    ],
-    "color": "white"
+    ]
   },
   {
-    "id": "lamp-08",
-    "name": "Lamp 08",
-    "category": "lamp",
-    "image": "/images/product-lamp-08.png",
-    "credit": {
-      "title": "BenQ WiT MindDuo 20201101",
-      "author": "Solomon203",
-      "license": "CC BY-SA 4.0",
-      "source": "https://commons.wikimedia.org/wiki/File:BenQ_WiT_MindDuo_20201101.jpg"
-    },
-    "price": 10600,
+    "id": "spring-05",
+    "name": "Spring SPR-28E",
+    "category": "spring",
+    "image": "/images/product-spring-05.png",
+    "color": "gray",
+    "spec": "コイル外径 28 mm / 線径 4.5 mm / 自由長 40 mm / steel",
+    "price": 3600,
+    "sizes": [
+      "S"
+    ]
+  },
+  {
+    "id": "spring-06",
+    "name": "Spring SPR-19F",
+    "category": "spring",
+    "image": "/images/product-spring-06.png",
+    "color": "white",
+    "spec": "コイル外径 19 mm / 線径 2.8 mm / 自由長 30 mm / zinc",
+    "price": 4400,
+    "sizes": [
+      "S",
+      "M"
+    ]
+  },
+  {
+    "id": "spring-07",
+    "name": "Spring SPR-25G",
+    "category": "spring",
+    "image": "/images/product-spring-07.png",
+    "color": "black",
+    "spec": "コイル外径 25 mm / 線径 4 mm / 自由長 38 mm / black-oxide",
+    "price": 2500,
     "sizes": [
       "M",
       "L"
-    ],
-    "color": "white"
+    ]
+  },
+  {
+    "id": "spring-08",
+    "name": "Spring SPR-23H",
+    "category": "spring",
+    "image": "/images/product-spring-08.png",
+    "color": "brown",
+    "spec": "コイル外径 23 mm / 線径 3.5 mm / 自由長 36 mm / brass",
+    "price": 2300,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ]
+  },
+  {
+    "id": "bushing-01",
+    "name": "Bushing BSH-30A",
+    "category": "bushing",
+    "image": "/images/product-bushing-01.png",
+    "color": "gray",
+    "spec": "外径 30 mm / 内径 18 mm / 全長 24 mm / steel",
+    "price": 3200,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ]
+  },
+  {
+    "id": "bushing-02",
+    "name": "Bushing BSH-34B",
+    "category": "bushing",
+    "image": "/images/product-bushing-02.png",
+    "color": "white",
+    "spec": "外径 34 mm / 内径 21 mm / 全長 20 mm / zinc",
+    "price": 10700,
+    "sizes": [
+      "M",
+      "L"
+    ]
+  },
+  {
+    "id": "bushing-03",
+    "name": "Bushing BSH-28C",
+    "category": "bushing",
+    "image": "/images/product-bushing-03.png",
+    "color": "black",
+    "spec": "外径 28 mm / 内径 16 mm / 全長 26 mm / black-oxide",
+    "price": 6600,
+    "sizes": [
+      "S",
+      "M"
+    ]
+  },
+  {
+    "id": "bushing-04",
+    "name": "Bushing BSH-36D",
+    "category": "bushing",
+    "image": "/images/product-bushing-04.png",
+    "color": "brown",
+    "spec": "外径 36 mm / 内径 23 mm / 全長 22 mm / brass",
+    "price": 2500,
+    "sizes": [
+      "S"
+    ]
+  },
+  {
+    "id": "bushing-05",
+    "name": "Bushing BSH-30E",
+    "category": "bushing",
+    "image": "/images/product-bushing-05.png",
+    "color": "gray",
+    "spec": "外径 30 mm / 内径 15 mm / 全長 29 mm / steel",
+    "price": 10000,
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ]
+  },
+  {
+    "id": "bushing-06",
+    "name": "Bushing BSH-34F",
+    "category": "bushing",
+    "image": "/images/product-bushing-06.png",
+    "color": "white",
+    "spec": "外径 34 mm / 内径 19 mm / 全長 17 mm / zinc",
+    "price": 5900,
+    "sizes": [
+      "M",
+      "L"
+    ]
+  },
+  {
+    "id": "bushing-07",
+    "name": "Bushing BSH-28G",
+    "category": "bushing",
+    "image": "/images/product-bushing-07.png",
+    "color": "black",
+    "spec": "外径 28 mm / 内径 18 mm / 全長 31 mm / black-oxide",
+    "price": 1800,
+    "sizes": [
+      "S",
+      "M"
+    ]
+  },
+  {
+    "id": "bushing-08",
+    "name": "Bushing BSH-36H",
+    "category": "bushing",
+    "image": "/images/product-bushing-08.png",
+    "color": "brown",
+    "spec": "外径 36 mm / 内径 25 mm / 全長 18 mm / brass",
+    "price": 5300,
+    "sizes": [
+      "S"
+    ]
   }
 ]

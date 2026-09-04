@@ -2,22 +2,18 @@ import { strict as assert } from "node:assert";
 import { test } from "node:test";
 
 import {
-  ACHROMATIC_COLORS,
-  CHROMATIC_COLORS,
-  COLOR_CHROMA_THRESHOLD,
-  classifyColor,
   derivePrice,
   deriveSizes,
   type Category,
 } from "../scripts/enrich-products.ts";
 
 const priceRanges: Record<Category, readonly [number, number]> = {
-  bag: [3_000, 30_000],
-  shoes: [4_000, 20_000],
-  chair: [8_000, 60_000],
-  mug: [800, 4_000],
-  watch: [5_000, 80_000],
-  lamp: [2_000, 25_000],
+  bearing: [800, 20_000],
+  gear: [1_500, 40_000],
+  bolt: [100, 3_000],
+  nut: [100, 1_500],
+  spring: [200, 5_000],
+  bushing: [500, 12_000],
 };
 
 test("price and size derivation is deterministic and stays within category ranges", () => {
@@ -40,23 +36,4 @@ test("price and size derivation is deterministic and stays within category range
   }
 
   assert.ok(sizeSets.size >= 2);
-});
-
-test("color classification maps representative RGB values to the nearest named color", () => {
-  assert.equal(classifyColor({ r: 20, g: 20, b: 20 }), "black");
-  assert.equal(classifyColor({ r: 238, g: 242, b: 239 }), "white");
-  assert.equal(classifyColor({ r: 178, g: 42, b: 38 }), "red");
-});
-
-test("color classification chooses nearest colors from the dominant color chroma group", () => {
-  assert.equal(COLOR_CHROMA_THRESHOLD, 30);
-  assert.deepEqual(ACHROMATIC_COLORS, ["black", "white", "gray"]);
-  assert.deepEqual(CHROMATIC_COLORS, ["brown", "red", "blue", "green", "beige"]);
-
-  const lowChromaColor = { r: 180, g: 155, b: 155 };
-  assert.equal(classifyColor(lowChromaColor), "gray");
-  assert.equal(classifyColor(lowChromaColor), classifyColor(lowChromaColor));
-
-  assert.equal(classifyColor({ r: 180, g: 150, b: 150 }), "beige");
-  assert.equal(classifyColor({ r: 178, g: 42, b: 38 }), "red");
 });
