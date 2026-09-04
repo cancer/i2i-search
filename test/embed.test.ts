@@ -23,8 +23,9 @@ test("describeProduct sends product context and joins response parts", async () 
   const description = await describeProduct(
     new Uint8Array([1, 2, 3]),
     "image/png",
-    "Canvas Bag",
-    "bag",
+    "Bearing BRG-47A",
+    "bearing",
+    "BRG-47A — 外径 47 mm / 内径 20 mm / 幅 14 mm / 鋼球 8 個",
     "test-api-key",
     fetchFn,
   );
@@ -45,7 +46,7 @@ test("describeProduct sends product context and joins response parts", async () 
   });
   assert.equal(
     body.contents[0].parts[1].text,
-    "あなたはECサイトのコピーライターです。この商品（商品名: Canvas Bag / カテゴリ: bag）の商品説明文を日本語で書いてください。2〜3文、80〜150字。商品の特徴・素材感・使いどころ・魅力を購入者向けに述べる。写真そのものへの言及（「写真には」「写っている」「画像は」等）は禁止。説明文のみを出力。",
+    "あなたは機械部品カタログのライターです。この部品（品番: Bearing BRG-47A / 種類: bearing / 仕様: BRG-47A — 外径 47 mm / 内径 20 mm / 幅 14 mm / 鋼球 8 個）の商品説明文を日本語で書いてください。2〜3文、80〜150字。仕様に挙がった寸法と表面処理を必ず本文に含め、用途と選定時の判断材料に触れる。写真そのものへの言及（「写真には」「写っている」「画像は」等）は禁止。説明文のみを出力。",
   );
 });
 
@@ -55,7 +56,7 @@ test("describeProduct rejects an empty generated description", async () => {
   }), { status: 200 });
 
   await assert.rejects(
-    describeProduct(new Uint8Array([1]), "image/png", "Bag", "bag", "test-api-key", fetchFn),
+    describeProduct(new Uint8Array([1]), "image/png", "Nut NUT-16A", "nut", "NUT-16A — 二面幅 16 mm", "test-api-key", fetchFn),
     /product description/,
   );
 });
@@ -64,7 +65,7 @@ test("describeProduct preserves an upstream HTTP status", async () => {
   const fetchFn: typeof fetch = async () => new Response("model not found", { status: 404 });
 
   await assert.rejects(
-    describeProduct(new Uint8Array([1]), "image/png", "Bag", "bag", "secret-key", fetchFn),
+    describeProduct(new Uint8Array([1]), "image/png", "Nut NUT-16A", "nut", "NUT-16A — 二面幅 16 mm", "secret-key", fetchFn),
     (error: unknown) => {
       assert.equal((error as { status?: number }).status, 404);
       assert.match(String((error as Error).message), /404/);

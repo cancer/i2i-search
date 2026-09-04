@@ -8,7 +8,8 @@ import {
 
 type WorkerEnv = Env & { GEMINI_API_KEY: string; INGEST_TOKEN: string };
 
-interface Product {
+/** 投入用のシード（public/products.json）。商品マスタは D1 の products テーブル */
+interface SeedProduct {
   id: string;
   name: string;
   category: string;
@@ -16,6 +17,44 @@ interface Product {
   price: number;
   sizes: string[];
   color: string;
+  spec: string;
+}
+
+interface Product extends SeedProduct {
+  description: string;
+}
+
+interface ProductRow {
+  id: string;
+  name: string;
+  category: string;
+  image: string;
+  price: number;
+  /** D1 には JSON 文字列で入っている */
+  sizes: string;
+  color: string;
+  spec: string;
+  description: string;
+}
+
+const PRODUCT_COLUMNS = "id, name, category, image, price, sizes, color, spec, description";
+
+function toProduct(row: ProductRow): Product {
+  const sizes: unknown = JSON.parse(row.sizes);
+  return {
+    ...row,
+    sizes: Array.isArray(sizes) ? sizes.filter((size): size is string => typeof size === "string") : [],
+  };
+}
+
+async function selectProducts(env: WorkerEnv, ids?: readonly string[]): Promise<Product[]> {
+  const statement = ids === undefined
+    ? env.DB.prepare(`SELECT ${PRODUCT_COLUMNS} FROM products ORDER BY id`)
+    : env.DB
+      .prepare(`SELECT ${PRODUCT_COLUMNS} FROM products WHERE id IN (${ids.map(() => "?").join(", ")})`)
+      .bind(...ids);
+  const { results } = await statement.all<ProductRow>();
+  return results.map(toProduct);
 }
 
 function jsonResponse(body: unknown, status = 200, headers?: HeadersInit): Response {
@@ -76,24 +115,13 @@ async function ingest(request: Request, env: WorkerEnv): Promise<Response> {
       throw new Error("products fetch failed");
     }
 
-    const products = await productsResponse.json() as Product[];
+    const products = await productsResponse.json() as SeedProduct[];
     if (!Array.isArray(products)) {
       throw new Error("products response was not an array");
     }
 
-    const vectors: Array<{
-      id: string;
-      values: number[];
-      metadata: {
-        name: string;
-        category: string;
-        image: string;
-        description: string;
-        price: number;
-        sizes: string[];
-        color: string;
-      };
-    }> = [];
+    const vectors: Array<{ id: string; values: number[] }> = [];
+    const rows: D1PreparedStatement[] = [];
 
     for (const product of products.slice(offset, offset + limit)) {
       const imageResponse = await env.ASSETS.fetch(new URL(product.image, request.url));
@@ -108,6 +136,7 @@ async function ingest(request: Request, env: WorkerEnv): Promise<Response> {
         mimeType,
         product.name,
         product.category,
+        product.spec,
         env.GEMINI_API_KEY,
       );
       const values = await embedProduct(
@@ -116,22 +145,28 @@ async function ingest(request: Request, env: WorkerEnv): Promise<Response> {
         description,
         env.GEMINI_API_KEY,
       );
-      vectors.push({
-        id: product.id,
-        values,
-        metadata: {
-          name: product.name,
-          category: product.category,
-          image: product.image,
-          description,
-          price: product.price,
-          sizes: product.sizes,
-          color: product.color,
-        },
-      });
+      vectors.push({ id: product.id, values });
+      rows.push(
+        env.DB
+          .prepare(
+            `INSERT OR REPLACE INTO products (${PRODUCT_COLUMNS}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          )
+          .bind(
+            product.id,
+            product.name,
+            product.category,
+            product.image,
+            product.price,
+            JSON.stringify(product.sizes),
+            product.color,
+            product.spec,
+            description,
+          ),
+      );
     }
 
     if (vectors.length > 0) {
+      await env.DB.batch(rows);
       await env.VECTORIZE.upsert(vectors);
     }
 
@@ -149,36 +184,20 @@ async function ingest(request: Request, env: WorkerEnv): Promise<Response> {
   }
 }
 
-function optionalFiniteNumber(value: unknown): number | undefined {
-  return typeof value === "number" && Number.isFinite(value) ? value : undefined;
-}
-
-function optionalStringArray(value: unknown): string[] | undefined {
-  return Array.isArray(value) && value.every((item) => typeof item === "string")
-    ? value
-    : undefined;
-}
-
 async function queryVectorize(values: number[], env: WorkerEnv): Promise<Response> {
-  const matches = await env.VECTORIZE.query(values, {
-    topK: 12,
-    returnMetadata: "all",
-  });
+  const matches = await env.VECTORIZE.query(values, { topK: 12 });
+  const ranked = matches.matches;
+  if (ranked.length === 0) {
+    return jsonResponse({ results: [] });
+  }
+
+  const products = await selectProducts(env, ranked.map((match) => match.id));
+  const productsById = new Map(products.map((product) => [product.id, product]));
 
   return jsonResponse({
-    results: matches.matches.map((match) => {
-      const metadata = match.metadata;
-      return {
-        id: match.id,
-        score: match.score,
-        name: typeof metadata?.name === "string" ? metadata.name : "",
-        category: typeof metadata?.category === "string" ? metadata.category : "",
-        image: typeof metadata?.image === "string" ? metadata.image : "",
-        description: typeof metadata?.description === "string" ? metadata.description : undefined,
-        price: optionalFiniteNumber(metadata?.price),
-        sizes: optionalStringArray(metadata?.sizes),
-        color: typeof metadata?.color === "string" ? metadata.color : undefined,
-      };
+    results: ranked.flatMap((match) => {
+      const product = productsById.get(match.id);
+      return product === undefined ? [] : [{ ...product, score: match.score }];
     }),
   });
 }
@@ -213,6 +232,18 @@ export default {
       }
 
       return ingest(request, env);
+    }
+
+    if (pathname === "/api/products") {
+      if (request.method !== "GET") {
+        return errorResponse("GET is required", 405, { allow: "GET" });
+      }
+
+      try {
+        return jsonResponse(await selectProducts(env));
+      } catch {
+        return errorResponse("product lookup failed", 502);
+      }
     }
 
     if (pathname !== "/api/search") {

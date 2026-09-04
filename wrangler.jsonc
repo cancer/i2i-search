@@ -8,6 +8,14 @@
     "binding": "ASSETS",
     "run_worker_first": ["/api/*"]
   },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "i2i-search",
+      "database_id": "ec75bd07-4c01-4ddb-9d44-1c4c5560e614",
+      "remote": true
+    }
+  ],
   "vectorize": [
     {
       "binding": "VECTORIZE",

@@ -186,6 +186,7 @@ export async function describeProduct(
   mimeType: ImageMimeType,
   productName: string,
   category: string,
+  specification: string,
   apiKey: string,
   fetchFn: FetchFunction = fetch,
 ): Promise<string> {
@@ -200,7 +201,7 @@ export async function describeProduct(
         parts: [
           imagePart(bytes, mimeType),
           {
-            text: `あなたはECサイトのコピーライターです。この商品（商品名: ${productName} / カテゴリ: ${category}）の商品説明文を日本語で書いてください。2〜3文、80〜150字。商品の特徴・素材感・使いどころ・魅力を購入者向けに述べる。写真そのものへの言及（「写真には」「写っている」「画像は」等）は禁止。説明文のみを出力。`,
+            text: `あなたは機械部品カタログのライターです。この部品（品番: ${productName} / 種類: ${category} / 仕様: ${specification}）の商品説明文を日本語で書いてください。2〜3文、80〜150字。仕様に挙がった寸法と表面処理を必ず本文に含め、用途と選定時の判断材料に触れる。写真そのものへの言及（「写真には」「写っている」「画像は」等）は禁止。説明文のみを出力。`,
           },
         ],
       }],

@@ -11,12 +11,8 @@
     price: number;
     sizes: string[];
     color: string;
-    credit: {
-      title: string;
-      author: string;
-      license: string;
-      source: string;
-    };
+    spec: string;
+    description?: string;
   };
 
   type SearchResult = {
@@ -167,14 +163,6 @@
     return isColor(color) ? colorSwatches[color] : "#8a8178";
   }
 
-  function isCredit(value: unknown): value is Product["credit"] {
-    return isRecord(value)
-      && typeof value.title === "string"
-      && typeof value.author === "string"
-      && typeof value.license === "string"
-      && typeof value.source === "string";
-  }
-
   function isProduct(value: unknown): value is Product {
     return isRecord(value)
       && typeof value.id === "string"
@@ -187,7 +175,7 @@
       && value.sizes.length > 0
       && value.sizes.every(isSize)
       && isColor(value.color)
-      && isCredit(value.credit);
+      && typeof value.spec === "string";
   }
 
   function isSearchResult(value: unknown): value is SearchResult {
@@ -219,13 +207,13 @@
   }
 
   function getImageTitle(product: Product): string {
-    return `${product.name} — ${product.credit.author} / ${product.credit.license} (Wikimedia Commons)`;
+    return `${product.name} — ${product.spec}`;
   }
 
   async function loadProducts(): Promise<void> {
     loadingProducts = true;
     try {
-      const response = await fetch("/products.json");
+      const response = await fetch("/api/products");
       const payload: unknown = await response.json();
       if (!response.ok || !isProductList(payload)) {
         throw new Error("商品一覧を読み込めませんでした。");
@@ -684,7 +672,7 @@
     {/if}
   </section>
 
-  <footer class="attribution">Photos: Wikimedia Commons（各画像の帰属は画像の title 属性を参照）</footer>
+  <footer class="attribution">Images: 自動生成（パラメトリック 3D レンダ / CC0-1.0。寸法は画像の title 属性を参照）</footer>
 </main>
 
 <style>
